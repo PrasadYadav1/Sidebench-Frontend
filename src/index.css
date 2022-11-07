@@ -1,13 +1,71 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: Jakarta_Display_Bold;
+  src: url(./assets/fonts/PlusJakartaDisplay-Bold.otf);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: Jakarta_Display_Bold_Italic;
+  src: url(./assets/fonts/PlusJakartaDisplay-BoldItalic.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Display_Italic;
+  src: url(./assets/fonts/PlusJakartaDisplay-Italic.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Display_Light;
+  src: url(./assets/fonts/PlusJakartaDisplay-Light.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Display_Light_Italic;
+  src: url(./assets/fonts/PlusJakartaDisplay-LightItalic.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Display_Medium;
+  src: url(./assets/fonts/PlusJakartaDisplay-Medium.otf);
+}
+
+
+@font-face {
+  font-family: Jakarta_Display_Medium_Italic;
+  src: url(./assets/fonts/PlusJakartaDisplay-MediumItalic.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Display_Regular;
+  src: url(./assets/fonts/PlusJakartaDisplay-Regular.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Text_Bold;
+  src: url(./assets/fonts/PlusJakartaText-Bold.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Text_Bold_Italic;
+  src: url(./assets/fonts/PlusJakartaText-BoldItalic.otf);
+}
+
+
+@font-face {
+  font-family: Jakarta_Text_Italic;
+  src: url(./assets/fonts/PlusJakartaText-Italic.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Text_Light;
+  src: url(./assets/fonts/PlusJakartaText-Light.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Text_Light_Italic;
+  src: url(./assets/fonts/PlusJakartaText-LightItalic.otf);
+}
+
+@font-face {
+  font-family: Jakarta_Text_Regular;
+  src: url(./assets/fonts/PlusJakartaText-Regular.otf);
 }
