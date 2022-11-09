@@ -20,8 +20,10 @@ const styles = {
     background: '#FFFFFF'
   },
   outlet: {
+    position: 'absolute' as unknown as 'absolute',
     flexGrow: 1,
-    left: 0,
+    left: 240,
+    top: 90,
     right: 0,
     height: 990
   }

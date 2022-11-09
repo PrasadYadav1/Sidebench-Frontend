@@ -11,7 +11,23 @@ function App() {
         <Route element={<Layout />}>
           <Route
             path="/dashboard"
-            element={<Typography>Dashboard</Typography>}
+            element={<Typography component="div">Dashboard</Typography>}
+          />
+          <Route
+            path="/inventory"
+            element={<Typography component="div">Inventory</Typography>}
+          />
+          <Route
+            path="/customer-list"
+            element={<Typography component="div">Customer List</Typography>}
+          />
+          <Route
+            path="/team"
+            element={<Typography component="div">Team</Typography>}
+          />
+          <Route
+            path="/settings"
+            element={<Typography component="div">Settings</Typography>}
           />
         </Route>
       </Routes>
