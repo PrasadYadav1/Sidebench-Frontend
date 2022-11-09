@@ -1,10 +1,10 @@
 import {
   FormHelperText,
+  InputAdornment,
   InputLabel,
   TextField,
   TextFieldProps
 } from '@mui/material';
-import React from 'react';
 import styles from './styles';
 
 const InputField = ({
@@ -14,9 +14,11 @@ const InputField = ({
   type,
   placeholder,
   errorMessage = '',
+  showSearchIcon = false,
   size = 'medium',
+  style,
   ...props
-}: TextFieldProps & { errorMessage?: string }) => {
+}: TextFieldProps & { errorMessage?: string; showSearchIcon?: boolean }) => {
   return (
     <>
       {label && (
@@ -30,15 +32,25 @@ const InputField = ({
         </InputLabel>
       )}
       <TextField
+        {...props}
         id={id}
         name={name}
         placeholder={placeholder}
         type={type}
         size={size}
         fullWidth
-        {...props}
         sx={styles.text_field}
-        inputProps={{ sx: styles.input, 'data-testid': id }}
+        InputProps={{
+          sx: { ...style, ...styles.input },
+          inputProps: {
+            'data-testid': id
+          },
+          startAdornment: showSearchIcon ? (
+            <InputAdornment position="start">
+              <img alt="" src="/images/search-normal.png" />
+            </InputAdornment>
+          ) : null
+        }}
       />
       <FormHelperText sx={styles.error_message}>{errorMessage}</FormHelperText>
     </>

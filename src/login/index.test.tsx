@@ -1,10 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import Login from '.';
 
 describe('SignIn Container test', () => {
   it('title should be present', async () => {
-    const { getByTestId } = render(<Login />);
+    const { getByTestId } = render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     expect(getByTestId('login_title')).toBeInTheDocument();
     expect(getByTestId('login_header')).toBeInTheDocument();
     expect(getByTestId('login_sub_header')).toBeInTheDocument();
@@ -14,7 +18,11 @@ describe('SignIn Container test', () => {
   });
 
   it('empty credentials should show error message', async () => {
-    const { getByRole, getByTestId } = render(<Login />);
+    const { getByRole, getByTestId } = render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     const email = getByTestId('email') as HTMLInputElement;
     const password = getByTestId('password') as HTMLInputElement;
 
@@ -35,7 +43,11 @@ describe('SignIn Container test', () => {
   });
 
   it('invalid credentials should show error message', async () => {
-    const { getByRole, getByTestId } = render(<Login />);
+    const { getByRole, getByTestId } = render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     const email = getByTestId('email') as HTMLInputElement;
     const password = getByTestId('password') as HTMLInputElement;
 
