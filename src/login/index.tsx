@@ -15,6 +15,9 @@ import { useNavigate } from 'react-router-dom';
 import InputField from '../components/elements/inputField';
 import LoginData from './types';
 import styles from './styles';
+import postApi from '../utils/apis';
+import getAPIUrl from '../config';
+import { setLocalStorageData } from '../utils/commonHelpers';
 
 const validationSchema = object({
   email: string({
@@ -39,9 +42,14 @@ const Login: React.FC = () => {
     resolver: zodResolver(validationSchema)
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    navigate('/dashboard');
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const res = await postApi(`${getAPIUrl()}/admin/login`, data);
+      setLocalStorageData(res.data.data);
+      navigate('/dashboard');
+    } catch (error: any) {
+      console.log(error);
+    }
   });
 
   return (
