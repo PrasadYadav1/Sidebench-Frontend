@@ -31,6 +31,30 @@ const styles = {
   },
   settings: {
     marginTop: '552px'
+  },
+  logout_list_item: {
+    cursor: 'pointer'
+  },
+  logout: {
+    fontFamily: 'Jakarta_Text_Bold',
+    fontWeight: 600,
+    fontSize: '12px',
+    lineHeight: '15px',
+    width: '218px',
+    height: '48px',
+    borderRadius: '8px',
+    marginLeft: '18px'
+  },
+  cancel: {
+    fontFamily: 'Jakarta_Text_Bold',
+    fontWeight: 600,
+    fontSize: '12px',
+    lineHeight: '15px',
+    width: '218px',
+    height: '48px',
+    borderRadius: '8px',
+    background: '#D9D9D9',
+    color: '#000000'
   }
 };
 export default styles;
