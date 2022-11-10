@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Header from '../../components/header';
+import LeftPannel from '../../components/leftPannel';
 import styles from './styles';
 
 const Layout = () => {
@@ -8,7 +9,7 @@ const Layout = () => {
       <Header />
       <div style={styles.layout_main}>
         <div style={styles.left_pannel}>
-          <>left pannel</>
+          <LeftPannel />
         </div>
         <div style={styles.outlet}>
           <Outlet />
