@@ -3,7 +3,8 @@ export const LEFT_PANNEL_TEXT = {
   INVENTORY: 'Inventory',
   CUSTOMER_LIST: 'Customer List',
   TEAM: 'Team',
-  SETTINGS: 'Settings'
+  SETTINGS: 'Settings',
+  LOGOUT: 'Logout'
 };
 
 export const LEFT_PANNEL_ITEMS = [
