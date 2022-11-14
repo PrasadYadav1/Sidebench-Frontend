@@ -103,16 +103,16 @@ const LeftPannel = () => {
           </ListItemIcon>
         </ListItem>
       </List>
-
       <Popup
         id="logout"
         open={logout}
         title="Log Out"
         textAlign="left"
-        handleClose={() => null}
+        handleClose={() => setLogout(false)}
         description={
           <>Are you sure you want to sign out from the Admin Portal?</>
         }
+        style={styles.popup_width}
       >
         <>
           <Button

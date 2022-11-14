@@ -24,9 +24,7 @@ const InputField = ({
       {label && (
         <InputLabel
           htmlFor={name}
-          sx={
-            props.error ? { ...styles.label, color: '#ED0000' } : styles.label
-          }
+          sx={props.error ? { ...styles.label, ...styles.color } : styles.label}
         >
           {label}
         </InputLabel>
@@ -39,7 +37,6 @@ const InputField = ({
         type={type}
         size={size}
         fullWidth
-        sx={styles.text_field}
         InputProps={{
           sx: { ...style, ...styles.input },
           inputProps: {
