@@ -1,5 +1,6 @@
 import axios from 'axios';
 import getAPIUrl from '../config';
+import { getAccessToken } from './commonHelpers';
 
 // use this for calling public apis
 const axiosInstance = axios.create({
@@ -17,6 +18,18 @@ export const axiosInstanceWithAuth = axios.create({
     'content-type': 'application/json'
   },
   responseType: 'json'
+});
+
+axiosInstanceWithAuth.interceptors.request.use((request) => {
+  const accToken = getAccessToken();
+  if (accToken) {
+    if (request.headers) {
+      request.headers.Authorization = `Bearer ${accToken ?? ''}`;
+    } else {
+      request.headers = { Authorization: `Bearer ${accToken ?? ''}` };
+    }
+  }
+  return request;
 });
 
 export default axiosInstance;

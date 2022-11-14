@@ -52,6 +52,9 @@ const styles = {
   mt: {
     marginTop: '24px'
   },
+  fh: {
+    height: '56px'
+  },
   remember_forgot_password_grid: {
     display: 'flex',
     alignItems: 'center',
