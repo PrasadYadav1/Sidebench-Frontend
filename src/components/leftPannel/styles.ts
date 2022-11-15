@@ -42,8 +42,8 @@ const styles = {
     lineHeight: '15px',
     width: '218px',
     height: '48px',
-    borderRadius: '8px',
-    marginLeft: '18px'
+    marginLeft: '18px',
+    borderRadius: '99px'
   },
   cancel: {
     fontFamily: 'Jakarta_Text_Bold',
@@ -52,9 +52,12 @@ const styles = {
     lineHeight: '15px',
     width: '218px',
     height: '48px',
-    borderRadius: '8px',
     background: '#D9D9D9',
-    color: '#000000'
+    color: '#000000',
+    borderRadius: '99px'
+  },
+  popup_width: {
+    width: '450px'
   }
 };
 export default styles;

@@ -4,7 +4,6 @@ const styles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    maxWidth: 280,
     background: '#ffffff',
     p: 3,
     borderRadius: 2,
@@ -22,6 +21,9 @@ const styles = {
     lineHeight: '36px',
     color: '#001533',
     mb: 3
+  },
+  df: {
+    display: 'flex'
   },
   description: {
     fontFamily: 'Jakarta_Text_Regular',
