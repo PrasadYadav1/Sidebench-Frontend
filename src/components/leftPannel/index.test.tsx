@@ -1,7 +1,6 @@
 import {
   fireEvent,
   render,
-  waitForElementToBeRemoved
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { LEFT_PANNEL_TEXT } from '../../utils/constants';

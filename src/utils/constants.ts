@@ -1,3 +1,5 @@
+import OrdersData from '../containers/dashboard/types';
+
 export const LEFT_PANNEL_TEXT = {
   DASHBOARD: 'Dashboard',
   INVENTORY: 'Inventory',
@@ -42,5 +44,23 @@ export const LEFT_PANNEL_ITEMS = [
     ActiveIcon: '/images/settings.png',
     text: LEFT_PANNEL_TEXT.SETTINGS,
     url: '/settings'
+  }
+];
+
+export const ORDERS_DATA: OrdersData[] = [
+  {
+    imgSource: '/images/order-image.png',
+    name: 'Monica Smith',
+    date: 'Due by: 09/01/2022'
+  },
+  {
+    imgSource: '/images/order-image.png',
+    name: 'Monica Smith',
+    date: 'Due by: 09/01/2022'
+  },
+  {
+    imgSource: '/images/order-image.png',
+    name: 'Monica Smith',
+    date: 'Due by: 09/01/2022'
   }
 ];
