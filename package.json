@@ -7,6 +7,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@hookform/resolvers": "^2.9.10",
+    "@material-table/core": "^0.2.52",
     "@mui/material": "^5.10.11",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -14,10 +15,12 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.2",
     "@types/react": "^18.0.23",
+    "@types/react-datepicker": "^4.8.0",
     "@types/react-dom": "^18.0.7",
     "axios": "^0.26.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.1",
     "react-router-dom": "6",
@@ -68,5 +71,10 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.7.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/axios.js"
+    }
   }
 }
