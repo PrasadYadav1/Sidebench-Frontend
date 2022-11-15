@@ -32,7 +32,8 @@ const styles = {
   },
   inputfield: {
     width: '332px',
-    height: '42px'
+    height: '42px',
+    borderRadius: '99px'
   },
   line: {
     width: '2px',

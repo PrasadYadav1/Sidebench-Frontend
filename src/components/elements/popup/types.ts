@@ -1,5 +1,5 @@
 import { ModalProps } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, SetStateAction } from 'react';
 
 interface PopupProps extends ModalProps {
   title: string;
@@ -7,5 +7,6 @@ interface PopupProps extends ModalProps {
   open: boolean;
   handleClose: (e: React.ChangeEvent<HTMLInputElement>) => void;
   textAlign: 'left' | 'center' | 'right';
+  handleClickIcon?: () => void;
 }
 export default PopupProps;

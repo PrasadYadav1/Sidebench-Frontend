@@ -7,8 +7,10 @@ const Popup = ({
   description,
   open,
   handleClose,
+  handleClickIcon,
   textAlign,
   id,
+  style,
   ...props
 }: PopupProps) => {
   return (
@@ -19,26 +21,43 @@ const Popup = ({
       aria-describedby="modal-description"
       id={id}
       BackdropProps={{
-        sx: styles.modal_backdrop
+        sx: { ...styles.modal_backdrop }
       }}
     >
-      <Box sx={styles.modal}>
-        <Typography
-          id="modal-title"
-          variant="h6"
-          component="h2"
-          sx={[styles.title, { textAlign }]}
-        >
-          {title}
-        </Typography>
-        <Typography
-          id="modal-description"
-          sx={[styles.description, { textAlign }]}
-          component="div"
-        >
-          {description}
-        </Typography>
-        <Typography sx={styles.buttonsContainer}>{props.children}</Typography>
+      <Box sx={{ ...styles.modal, ...style }}>
+        <div style={styles.df}>
+          <div>
+            <Typography
+              id="modal-title"
+              variant="h6"
+              component="h2"
+              sx={[styles.title, { textAlign }]}
+            >
+              {title}
+            </Typography>
+            <Typography
+              id="modal-description"
+              sx={[styles.description, { textAlign }]}
+              component="div"
+            >
+              {description}
+            </Typography>
+            <Typography sx={styles.buttonsContainer}>
+              {props.children}
+            </Typography>
+          </div>
+          {handleClickIcon ? (
+            <div>
+              <img
+                aria-hidden="true"
+                alt=""
+                src="/images/close.png"
+                onClick={handleClickIcon}
+                onKeyDown={handleClickIcon}
+              />
+            </div>
+          ) : null}
+        </div>
       </Box>
     </Modal>
   );

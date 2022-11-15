@@ -53,6 +53,7 @@ const styles = {
     marginTop: '24px'
   },
   fh: {
+    borderRadius: '99px',
     height: '56px'
   },
   remember_forgot_password_grid: {

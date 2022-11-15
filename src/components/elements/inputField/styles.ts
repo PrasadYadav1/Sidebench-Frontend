@@ -6,12 +6,6 @@ const styles = {
     fontSize: '14px',
     lineHeight: '18px'
   },
-  text_field: {
-    [`& fieldset`]: {
-      borderRadius: 4,
-      border: '1px solid #C3CCD9'
-    }
-  },
   input: {
     fontSize: 14,
     fontFamily: 'Jakarta_Text_Regular',
@@ -25,6 +19,9 @@ const styles = {
     fontWeight: 400,
     fontSize: '14px',
     lineHeight: '21px'
+  },
+  color: {
+    color: '#ED0000'
   }
 };
 export default styles;
