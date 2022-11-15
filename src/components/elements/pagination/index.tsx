@@ -2,7 +2,7 @@ import { Pagination, Stack, TextField, Typography } from '@mui/material';
 import styles from './styles';
 
 export interface PaginationProps {
-  dataTestId: string;
+  id: string;
   count: number;
   page: number;
   onChange?: () => void;
@@ -16,11 +16,12 @@ export const CustomPagination = ({
   onChange,
   pageSize,
   currentPageDataLength,
-  dataTestId
+  id
 }: PaginationProps) => {
   return (
     <Stack
-      data-testid={`${dataTestId}-container`}
+      id={id}
+      data-testid={`${id}-container`}
       sx={styles.container}
       direction="row"
       // spacing={{ lg: 84, xl: 165, md: 100 }}
@@ -31,7 +32,8 @@ export const CustomPagination = ({
         </Typography>
         {'    '}
         <TextField
-          data-testid={`${dataTestId}-data-length`}
+          id={`${id}-input`}
+          data-testid={`${id}-data-length`}
           InputProps={{ sx: styles.input }}
           size="small"
           sx={styles.textField}
@@ -44,7 +46,8 @@ export const CustomPagination = ({
         </Typography>
       </div>
       <Pagination
-        data-testid={`${dataTestId}-pagination`}
+        id={`${id}-pagination`}
+        data-testid={`${id}-pagination-test`}
         count={count}
         page={page}
         shape="rounded"

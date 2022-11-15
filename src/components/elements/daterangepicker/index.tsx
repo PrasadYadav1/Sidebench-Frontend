@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import DatePicker from 'react-datepicker';
 
 export interface DateRangeProps {
-  dataTestId: string;
+  id: string;
   startDate: Date | null;
   endDate: Date | null;
   onChange: (dates: [start: Date | null, end: Date | null]) => void;
@@ -17,12 +17,12 @@ const DateRangeComp = ({
   onChange,
   customInput,
   maxDate,
-  dataTestId,
+  id,
   placeholder
 }: DateRangeProps) => {
   return (
     <DatePicker
-      data-testid={dataTestId}
+      id={id}
       selected={startDate}
       onChange={onChange}
       startDate={startDate}

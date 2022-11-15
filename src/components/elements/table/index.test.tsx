@@ -6,7 +6,7 @@ describe(' tests', () => {
   it('table renders correctly without toolbar', () => {
     render(
       <MaterialTable
-        dataTestId="abcdefg"
+        id="abcdefg"
         columns={[
           {
             title: 'First Name',
@@ -30,12 +30,12 @@ describe(' tests', () => {
     expect(screen.getByText('First Name')).toBeInTheDocument();
     expect(screen.getByText('Last Name')).toBeInTheDocument();
     expect(screen.getByText('Role')).toBeInTheDocument();
-    expect(screen.getByTestId('abcdefg-pagination')).toBeInTheDocument();
+    expect(screen.getByTestId('abcdefg-pagination-test')).toBeInTheDocument();
   });
   it('table renders correctly with toolbar', () => {
     render(
       <MaterialTable
-        dataTestId="abcdefg"
+        id="abcdefg"
         columns={[
           {
             title: 'First Name',
@@ -60,7 +60,7 @@ describe(' tests', () => {
     expect(screen.getByText('First Name')).toBeInTheDocument();
     expect(screen.getByText('Last Name')).toBeInTheDocument();
     expect(screen.getByText('Role')).toBeInTheDocument();
-    expect(screen.getByTestId('abcdefg-pagination')).toBeInTheDocument();
+    expect(screen.getByTestId('abcdefg-pagination-test')).toBeInTheDocument();
     const toolBarContent = screen.getByTestId('toolbar');
     expect(toolBarContent).toBeInTheDocument();
     expect(toolBarContent.textContent).toBe('Test tool bar');

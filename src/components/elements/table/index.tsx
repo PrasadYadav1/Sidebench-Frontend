@@ -6,7 +6,7 @@ import styles from './styles';
 
 export interface TableAdditionalProps {
   Toolbar?: ComponentType<any>;
-  dataTestId: string;
+  id: string;
   pageSize?: number;
   onPageChange?: () => void;
 }
@@ -21,11 +21,11 @@ const Table = ({
   page,
   pageSize,
   onPageChange,
-  dataTestId
+  id
 }: MaterialTableProps<object> & TableAdditionalProps) => {
   return (
     <MaterialTable
-      data-testId={dataTestId}
+      data-testId={id}
       actions={actions}
       localization={{
         header: {
@@ -50,7 +50,7 @@ const Table = ({
                 <td>
                   <CustomPagination
                     {...props}
-                    dataTestId={dataTestId}
+                    id={id}
                     count={totalCount ?? 0}
                     page={page ?? 1}
                     pageSize={pageSize}
@@ -67,7 +67,7 @@ const Table = ({
                 <td>
                   <CustomPagination
                     {...props}
-                    dataTestId={dataTestId}
+                    id={id}
                     count={totalCount ?? 0}
                     page={page ?? 1}
                     pageSize={pageSize}

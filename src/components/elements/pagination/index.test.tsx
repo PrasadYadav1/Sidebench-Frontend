@@ -6,7 +6,7 @@ describe('Pagination tests', () => {
     const onChange = jest.fn();
     render(
       <CustomPagination
-        dataTestId="abcdefg"
+        id="abcdefg"
         pageSize={10}
         count={100}
         page={3}

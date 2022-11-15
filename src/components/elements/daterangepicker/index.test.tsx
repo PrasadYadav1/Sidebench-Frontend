@@ -6,9 +6,9 @@ describe('Daterange Picker tests', () => {
     const onChange = jest.fn();
     const tree = render(
       <DateRangePicker
-        dataTestId="abcdefg"
-        startDate={new Date()}
-        endDate={new Date()}
+        id="abcdefg"
+        startDate={new Date('11/10/2022')}
+        endDate={new Date('11/10/2022')}
         onChange={onChange}
       />
     );
