@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './containers/layout';
 import Login from './login';
+import Admin from './containers/admin';
 
 function App() {
   return (
@@ -23,7 +24,11 @@ function App() {
           />
           <Route
             path="/team"
-            element={<Typography component="div">Team</Typography>}
+            element={
+              <Typography component="div">
+                <Admin />
+              </Typography>
+            }
           />
           <Route
             path="/settings"

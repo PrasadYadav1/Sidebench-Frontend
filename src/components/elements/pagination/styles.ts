@@ -1,6 +1,6 @@
 const styles = {
   container: {
-    // marginTop: '1%',
+    marginTop: '0.5%',
     marginBottom: '2%'
     // marginRight: '0%'
   },
@@ -29,7 +29,10 @@ const styles = {
   },
   input: {
     height: '30px',
-    width: '60px'
+    width: '60px',
+    fontFamily: 'Jakarta_Text_Light',
+    fontWeight: 400,
+    fontSize: '14px'
   }
 };
 export default styles;

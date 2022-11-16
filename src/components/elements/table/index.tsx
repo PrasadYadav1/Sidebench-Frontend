@@ -1,6 +1,6 @@
 import { Paper } from '@mui/material';
 import MaterialTable, { MaterialTableProps } from '@material-table/core';
-import { ComponentType } from 'react';
+import { ComponentType, ChangeEvent } from 'react';
 import { CustomPagination } from '../pagination';
 import styles from './styles';
 
@@ -8,7 +8,7 @@ export interface TableAdditionalProps {
   Toolbar?: ComponentType<any>;
   id: string;
   pageSize?: number;
-  onPageChange?: () => void;
+  onCustomPageChange?: (event: ChangeEvent<unknown>, page: number) => void;
 }
 
 const Table = ({
@@ -20,7 +20,7 @@ const Table = ({
   totalCount,
   page,
   pageSize,
-  onPageChange,
+  onCustomPageChange,
   id
 }: MaterialTableProps<object> & TableAdditionalProps) => {
   return (
@@ -35,7 +35,7 @@ const Table = ({
       options={{
         search: false,
         showTitle: false,
-        toolbar: true,
+        toolbar: Toolbar !== undefined,
         headerStyle: styles.header,
         pageSize: pageSize ?? 10,
         actionsColumnIndex: -1
@@ -54,7 +54,7 @@ const Table = ({
                     count={totalCount ?? 0}
                     page={page ?? 1}
                     pageSize={pageSize}
-                    onChange={onPageChange}
+                    onChange={onCustomPageChange}
                     currentPageDataLength={data.length}
                   />
                 </td>
@@ -71,7 +71,7 @@ const Table = ({
                     count={totalCount ?? 0}
                     page={page ?? 1}
                     pageSize={pageSize}
-                    onChange={onPageChange}
+                    onChange={onCustomPageChange}
                     currentPageDataLength={data.length}
                   />
                 </td>

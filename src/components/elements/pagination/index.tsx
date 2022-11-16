@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { Pagination, Stack, TextField, Typography } from '@mui/material';
 import styles from './styles';
 
@@ -5,7 +6,7 @@ export interface PaginationProps {
   id: string;
   count: number;
   page: number;
-  onChange?: () => void;
+  onChange?: (event: ChangeEvent<unknown>, page: number) => void;
   pageSize?: number;
   currentPageDataLength?: number;
 }
@@ -48,7 +49,7 @@ export const CustomPagination = ({
       <Pagination
         id={`${id}-pagination`}
         data-testid={`${id}-pagination-test`}
-        count={count}
+        count={Math.ceil(count / (pageSize ?? 10))}
         page={page}
         shape="rounded"
         size="small"
