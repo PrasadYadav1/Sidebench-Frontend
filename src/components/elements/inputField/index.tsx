@@ -1,4 +1,5 @@
 import {
+  FilledInputProps,
   FormHelperText,
   InputAdornment,
   InputLabel,
@@ -16,9 +17,14 @@ const InputField = ({
   errorMessage = '',
   showSearchIcon = false,
   size = 'medium',
+  showBorder = true,
   style,
   ...props
-}: TextFieldProps & { errorMessage?: string; showSearchIcon?: boolean }) => {
+}: TextFieldProps & {
+  errorMessage?: string;
+  showSearchIcon?: boolean;
+  showBorder?: boolean;
+}) => {
   return (
     <>
       {label && (
@@ -37,17 +43,20 @@ const InputField = ({
         type={type}
         size={size}
         fullWidth
-        InputProps={{
-          sx: { ...style, ...styles.input },
-          inputProps: {
-            'data-testid': id
-          },
-          startAdornment: showSearchIcon ? (
-            <InputAdornment position="start">
-              <img alt="" src="/images/search-normal.png" />
-            </InputAdornment>
-          ) : null
-        }}
+        InputProps={
+          {
+            sx: { ...style, ...styles.input },
+            inputProps: {
+              'data-testid': id
+            },
+            disableUnderline: !showBorder,
+            startAdornment: showSearchIcon ? (
+              <InputAdornment position="start">
+                <img alt="" src="/images/search-normal.png" />
+              </InputAdornment>
+            ) : null
+          } as Partial<FilledInputProps> & { disableUnderline: boolean }
+        }
       />
       <FormHelperText sx={styles.error_message}>{errorMessage}</FormHelperText>
     </>
