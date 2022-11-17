@@ -197,6 +197,72 @@ const styles = {
     lineHeight: '30px',
     textAlign: 'center' as unknown as 'center',
     color: '#313131'
+  },
+  fixed_orders_container: {
+    boxSizing: 'border-box' as unknown as 'border-box',
+    width: '210px',
+    height: '317px',
+    border: '1px solid #E6E6E6',
+    borderRadius: '8px',
+    display: 'flex'
+  },
+  fixed_orders_image: {
+    width: '210px',
+    height: '317px'
+  },
+  fixed_order_image_text1: {
+    position: 'absolute' as unknown as 'absolute',
+    width: '60px',
+    height: '22px',
+    fontFamily: 'Cormorant',
+    fontWeight: 300,
+    fontSize: '18px',
+    lineHeight: '22px',
+    letterSpacing: '-0.5px',
+    color: '#FFFFFF',
+    marginTop: '16px',
+    marginLeft: '140px'
+  },
+  fixed_order_image_text2: {
+    position: 'absolute' as unknown as 'absolute',
+    width: '176px',
+    height: '49px',
+    fontFamily: 'Cinzel',
+    fontWeight: 700,
+    fontSize: '36px',
+    lineHeight: '49px',
+    textAlign: 'center' as unknown as 'center',
+    letterSpacing: '-0.5px',
+    color: '#FFFFFF',
+    transform: 'rotate(-90deg)',
+    marginLeft: '-63px',
+    marginTop: '208px'
+  },
+  fixed_order_image_text3: {
+    position: 'absolute' as unknown as 'absolute',
+    width: '107px',
+    height: '26px',
+    fontFamily: 'Cinzel',
+    fontWeight: 700,
+    fontSize: '14px',
+    lineHeight: '26px',
+    textAlign: 'center' as unknown as 'center',
+    color: '#F7F7F7',
+    marginTop: '260px',
+    marginLeft: '100px'
+  },
+  fixed_order_image_text4: {
+    position: 'absolute' as unknown as 'absolute',
+    width: '65px',
+    height: '16px',
+    fontFamily: 'Cinzel',
+    fontWeight: 400,
+    fontSize: '12px',
+    lineHeight: '16px',
+    textAlign: 'center' as unknown as 'center',
+    color: '#F8F8F8',
+    marginLeft: '136px',
+    marginTop: '285px'
   }
 };
 export default styles;
