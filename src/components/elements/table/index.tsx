@@ -2,6 +2,7 @@ import { Paper } from '@mui/material';
 import MaterialTable, { MaterialTableProps } from '@material-table/core';
 import { ComponentType, ChangeEvent } from 'react';
 import { CustomPagination } from '../pagination';
+import DataNotFound from '../../noDataFound';
 import styles from './styles';
 
 export interface TableAdditionalProps {
@@ -30,6 +31,9 @@ const Table = ({
       localization={{
         header: {
           actions: ''
+        },
+        body: {
+          emptyDataSourceMessage: <DataNotFound />
         }
       }}
       options={{
