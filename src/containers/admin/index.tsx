@@ -8,6 +8,8 @@ import styles from './styles';
 import { getApi } from '../../utils/apis';
 import getAPIUrl from '../../config';
 import { AdminApiResponse, AdminApiProps } from './types';
+import DeleteAdmin from '../../components/deleteAdmin';
+import AdminTableMenu from '../../components/adminMenuItem';
 import { getApiErrorMessage } from '../../utils/commonHelpers';
 
 const getAdminsList = async (
@@ -42,6 +44,8 @@ const Admin = () => {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [search, setSearch] = useState('');
+  const [deleteAdmin, setDeleteAdmin] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>(0);
   const [openErrorToast, setErrorToast] = useState(false);
   const [toastErrorMsg, setToastErrorMsg] = useState('');
 
@@ -227,14 +231,22 @@ const Admin = () => {
         // )}
         actions={[
           (rowData) => ({
-            icon: () => (
-              <div style={styles.actionMenuBtn}>
-                <img src="more-horizontal 1.svg" alt="" />
-              </div>
-            ),
-            onClick: () => console.log('ghhgh')
+            icon: () => {
+              const { id } = rowData as AdminApiProps;
+              setSelectedId(id);
+              return <AdminTableMenu setDeleteAdmin={setDeleteAdmin} />;
+            },
+            onClick: () => {
+              console.log('');
+            }
           })
         ]}
+      />
+
+      <DeleteAdmin
+        selectedId={selectedId}
+        deleteAdmin={deleteAdmin}
+        setDeleteAdmin={setDeleteAdmin}
       />
     </div>
   );

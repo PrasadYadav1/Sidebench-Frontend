@@ -44,7 +44,7 @@ const Login: React.FC = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const res = await postApi(`${getAPIUrl()}/admin/login`, data);
+      const res = await postApi(`${getAPIUrl()}/admins/login`, data);
       setLocalStorageData(res.data.data);
       navigate('/dashboard');
     } catch (error: any) {
