@@ -1,7 +1,6 @@
 import {
   AppBar,
   Box,
-  Grid,
   IconButton,
   Stack,
   Tab,
@@ -15,7 +14,23 @@ import InputField from '../../components/elements/inputField';
 import { theme } from '../../components/header/styles';
 import { ORDERS_DATA } from '../../utils/constants';
 import styles from './styles';
-import OrdersData from './types';
+import OrdersData, { TabPanelProps } from './types';
+
+const TabPanel = (props: TabPanelProps) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+};
 
 const LookBookOrders: React.FC<{ ordersData: OrdersData[] }> = ({
   ordersData
@@ -61,6 +76,24 @@ const EmptyLookBooks = () => {
         No Orders in Queue of LookBooks
       </Typography>
     </Box>
+  );
+};
+
+const FinishedOrders = () => {
+  return (
+    <Typography component="div" style={styles.fixed_orders_container}>
+      <img
+        alt=""
+        src="/images/new-order-img.png"
+        style={styles.fixed_orders_image}
+      />
+      <Typography style={styles.fixed_order_image_text1}>3 Looks</Typography>
+      <Typography style={styles.fixed_order_image_text2}>Fall 2022</Typography>
+      <Typography style={styles.fixed_order_image_text3}>
+        Monica Smith
+      </Typography>
+      <Typography style={styles.fixed_order_image_text4}>09/01/2022</Typography>
+    </Typography>
   );
 };
 
@@ -253,86 +286,105 @@ const Dashboard = () => {
           </Toolbar>
         </AppBar>
       </ThemeProvider>
-      <Stack direction="row" spacing={2} style={styles.mt}>
-        <div style={styles.look_book_order_container}>
-          <div style={styles.look_book_order_inside_container}>
-            <Typography
-              component="div"
-              style={styles.look_book_order_container_text}
-            >
+
+      <TabPanel value={activeTab} index={1}>
+        <Stack direction="row" spacing={2} style={styles.mt}>
+          <div style={styles.look_book_order_container}>
+            <div style={styles.look_book_order_inside_container}>
               <Typography
-                data-testid="to-do"
-                style={styles.look_book_order_text}
+                component="div"
+                style={styles.look_book_order_container_text}
               >
-                To Do
+                <Typography
+                  data-testid="to-do"
+                  style={styles.look_book_order_text}
+                >
+                  To Do
+                </Typography>
+                <Typography
+                  data-testid="dot1"
+                  style={styles.look_book_order_text2}
+                >
+                  .
+                </Typography>
+                <Typography
+                  data-testid="to-do-count"
+                  style={styles.look_book_order_text3}
+                >
+                  15
+                </Typography>
               </Typography>
-              <Typography
-                data-testid="dot1"
-                style={styles.look_book_order_text2}
-              >
-                .
-              </Typography>
-              <Typography
-                data-testid="to-do-count"
-                style={styles.look_book_order_text3}
-              >
-                15
-              </Typography>
-            </Typography>
+            </div>
+            <LookBookOrders ordersData={ORDERS_DATA} />
           </div>
-          <LookBookOrders ordersData={ORDERS_DATA} />
-        </div>
-        <div style={styles.look_book_order_container}>
-          <div style={styles.look_book_order_inside_container}>
-            <Typography style={styles.look_book_order_container_text}>
-              <Typography
-                data-testid="in-progress"
-                style={styles.look_book_order_text}
-              >
-                In Progress
+          <div style={styles.look_book_order_container}>
+            <div style={styles.look_book_order_inside_container}>
+              <Typography style={styles.look_book_order_container_text}>
+                <Typography
+                  data-testid="in-progress"
+                  style={styles.look_book_order_text}
+                >
+                  In Progress
+                </Typography>
+                <Typography
+                  data-testid="dot2"
+                  style={styles.look_book_order_text2}
+                >
+                  .
+                </Typography>
+                <Typography
+                  data-testid="in-progress-count"
+                  style={styles.look_book_order_text3}
+                >
+                  15
+                </Typography>
               </Typography>
-              <Typography
-                data-testid="dot2"
-                style={styles.look_book_order_text2}
-              >
-                .
-              </Typography>
-              <Typography
-                data-testid="in-progress-count"
-                style={styles.look_book_order_text3}
-              >
-                15
-              </Typography>
-            </Typography>
+            </div>
+            <LookBookOrders ordersData={ORDERS_DATA} />
           </div>
-          <LookBookOrders ordersData={ORDERS_DATA} />
-        </div>
-        <div style={styles.look_book_order_container}>
-          <div style={styles.look_book_order_inside_container}>
-            <Typography style={styles.look_book_order_container_text}>
-              <Typography
-                data-testid="queued"
-                style={styles.look_book_order_text}
-              >
-                Queued
+          <div style={styles.look_book_order_container}>
+            <div style={styles.look_book_order_inside_container}>
+              <Typography style={styles.look_book_order_container_text}>
+                <Typography
+                  data-testid="queued"
+                  style={styles.look_book_order_text}
+                >
+                  Queued
+                </Typography>
+                <Typography
+                  data-testid="dot3"
+                  style={styles.look_book_order_text2}
+                >
+                  .
+                </Typography>
+                <Typography
+                  data-testid="queued-count"
+                  style={styles.look_book_order_text3}
+                >
+                  15
+                </Typography>
               </Typography>
-              <Typography
-                data-testid="dot3"
-                style={styles.look_book_order_text2}
-              >
-                .
-              </Typography>
-              <Typography
-                data-testid="queued-count"
-                style={styles.look_book_order_text3}
-              >
-                15
-              </Typography>
-            </Typography>
+            </div>
+            <LookBookOrders ordersData={ORDERS_DATA} />
           </div>
-          <LookBookOrders ordersData={ORDERS_DATA} />
-        </div>
-      </Stack>
+        </Stack>
+      </TabPanel>
+      <TabPanel value={activeTab} index={2}>
+        <Stack direction="column" gap="25px" marginTop="24px">
+          <Stack direction="row" gap="25px">
+            <FinishedOrders />
+            <FinishedOrders />
+            <FinishedOrders />
+            <FinishedOrders />
+          </Stack>
+          <Stack direction="row" gap="25px">
+            <FinishedOrders />
+            <FinishedOrders />
+            <FinishedOrders />
+            <FinishedOrders />
+          </Stack>
+        </Stack>
+      </TabPanel>
     </div>
   );
 };
