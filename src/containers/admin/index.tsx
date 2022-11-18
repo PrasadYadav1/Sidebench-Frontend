@@ -3,10 +3,14 @@ import { AxiosResponse } from 'axios';
 import { Chip } from '@mui/material';
 import MaterialTable from '../../components/elements/table';
 import ToolBar from './toolbar';
+import Toast from '../../components/elements/toast';
 import styles from './styles';
 import { getApi } from '../../utils/apis';
 import getAPIUrl from '../../config';
 import { AdminApiResponse, AdminApiProps } from './types';
+import DeleteAdmin from '../../components/deleteAdmin';
+import AdminTableMenu from '../../components/adminMenuItem';
+import { getApiErrorMessage } from '../../utils/commonHelpers';
 
 const getAdminsList = async (
   page: number,
@@ -40,13 +44,19 @@ const Admin = () => {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [search, setSearch] = useState('');
+  const [deleteAdmin, setDeleteAdmin] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>(0);
+  const [openErrorToast, setErrorToast] = useState(false);
+  const [toastErrorMsg, setToastErrorMsg] = useState('');
 
   const onDateRangeChange = async (dates: [Date | null, Date | null]) => {
     setDateRange((prev) => ({ ...prev, start: dates[0], end: dates[1] }));
     if ((dates[0] && dates[1]) || (!dates[0] && !dates[1])) {
       const adminData = await getAdminsList(page, dates, search);
       if (adminData instanceof Error) {
-        console.log('Error', adminData);
+        const errMsg = getApiErrorMessage(adminData);
+        setToastErrorMsg(errMsg);
+        setErrorToast(true);
       } else {
         setData(adminData.data.rows);
         setTotalCount(adminData.data.count);
@@ -63,7 +73,9 @@ const Admin = () => {
       val
     );
     if (adminData instanceof Error) {
-      console.log('Error', adminData);
+      const errMsg = getApiErrorMessage(adminData);
+      setToastErrorMsg(errMsg);
+      setErrorToast(true);
     } else {
       setData(adminData.data.rows);
       setTotalCount(adminData.data.count);
@@ -78,11 +90,17 @@ const Admin = () => {
       search
     );
     if (adminData instanceof Error) {
-      console.log('Error', adminData);
+      const errMsg = getApiErrorMessage(adminData);
+      setToastErrorMsg(errMsg);
+      setErrorToast(true);
     } else {
       setData(adminData.data.rows);
       setTotalCount(adminData.data.count);
     }
+  };
+
+  const onErrorToastClose = () => {
+    setErrorToast(false);
   };
 
   useEffect(function onLoad() {
@@ -93,7 +111,9 @@ const Admin = () => {
         search
       );
       if (adminData instanceof Error) {
-        console.log('Error', adminData);
+        const errMsg = getApiErrorMessage(adminData);
+        setToastErrorMsg(errMsg);
+        setErrorToast(true);
       } else {
         setData(adminData.data.rows);
         setTotalCount(adminData.data.count);
@@ -111,6 +131,15 @@ const Admin = () => {
         onSearchChange={onSearchChange}
         searchText={search}
         count={totalCount}
+      />
+      <Toast
+        id="admin-error"
+        open={openErrorToast}
+        message={toastErrorMsg}
+        severity="error"
+        onClose={onErrorToastClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        alertStyles={styles.errorToast}
       />
       <MaterialTable
         id="admin-table"
@@ -202,14 +231,22 @@ const Admin = () => {
         // )}
         actions={[
           (rowData) => ({
-            icon: () => (
-              <div style={styles.actionMenuBtn}>
-                <img src="more-horizontal 1.svg" alt="" />
-              </div>
-            ),
-            onClick: () => console.log('ghhgh')
+            icon: () => {
+              const { id } = rowData as AdminApiProps;
+              setSelectedId(id);
+              return <AdminTableMenu setDeleteAdmin={setDeleteAdmin} />;
+            },
+            onClick: () => {
+              console.log('');
+            }
           })
         ]}
+      />
+
+      <DeleteAdmin
+        selectedId={selectedId}
+        deleteAdmin={deleteAdmin}
+        setDeleteAdmin={setDeleteAdmin}
       />
     </div>
   );
