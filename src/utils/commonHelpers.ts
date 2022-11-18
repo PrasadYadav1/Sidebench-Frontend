@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { User } from '../login/types';
 
 export const clearLocalStorage = () => {
@@ -34,4 +35,16 @@ export const setLocalStorageData = (data: User) => {
   localStorage.setItem('id', String(data.id));
   localStorage.setItem('roleName', data.role.name);
   localStorage.setItem('token', data.token);
+};
+
+export const getApiErrorMessage = (error: Error) => {
+  if (axios.isAxiosError(error) && error.response) {
+    const status = error.response?.status;
+    const data = error.response?.data as { errors: string | Array<object> };
+    if (status === 400) {
+      return typeof data.errors === 'string' ? data.errors : 'Bad Request';
+    }
+    return data.errors as string;
+  }
+  return error.message;
 };
