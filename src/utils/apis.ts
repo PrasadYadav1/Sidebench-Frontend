@@ -44,5 +44,4 @@ export const getApi = (
     method: 'GET'
   });
 };
-
 export default postApi;
