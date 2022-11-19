@@ -23,7 +23,7 @@ const AdminTableMenu = ({ setDeleteAdmin }: AdminTableMenuProps) => {
       }}
       tabIndex={0}
     >
-      <img src="more-horizontal 1.svg" alt="" />
+      <img src="more-horizontal 1.svg" alt="data-menu" />
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

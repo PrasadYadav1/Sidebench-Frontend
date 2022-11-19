@@ -45,6 +45,7 @@ const ToolBar = ({
           key="admin-search"
           sx={styles.search}
           type="text"
+          data-testid="admin-search-test"
           InputProps={{
             sx: styles.searchInput,
             startAdornment: (
@@ -60,6 +61,7 @@ const ToolBar = ({
         <div>
           <DateRangePicker
             id="sort-by"
+            data-testid="sort-by-test"
             startDate={start}
             endDate={end}
             onChange={onDateRangeChange}
