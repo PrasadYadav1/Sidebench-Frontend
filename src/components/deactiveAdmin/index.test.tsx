@@ -1,19 +1,18 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import DeleteAdmin from '.';
+import DeactiveAdmin from '.';
 
 describe('Tests for Delete Admin Popup  ', () => {
-  const setOpenErrorToast = jest.fn();
-  const setOpenSuccessToast = jest.fn();
-  const setToastErrorMsg = jest.fn();
-  const setToastSuccessMsg = jest.fn();
-
   it('Should popup close when click on cancel button', async () => {
-    const setDeleteAdmin = jest.fn();
+    const setDeactiveAdmin = jest.fn();
+    const setOpenErrorToast = jest.fn();
+    const setOpenSuccessToast = jest.fn();
+    const setToastErrorMsg = jest.fn();
+    const setToastSuccessMsg = jest.fn();
     const { getByRole } = render(
-      <DeleteAdmin
-        deleteAdmin
+      <DeactiveAdmin
+        deactiveAdmin
         selectedId={0}
-        setDeleteAdmin={setDeleteAdmin}
+        setDeactiveAdmin={setDeactiveAdmin}
         setOpenErrorToast={setOpenErrorToast}
         setOpenSuccessToast={setOpenSuccessToast}
         setToastErrorMsg={setToastErrorMsg}
@@ -21,10 +20,10 @@ describe('Tests for Delete Admin Popup  ', () => {
       />
     );
 
-    expect(screen.getByTestId('admin-cancel')).toBeInTheDocument();
-    expect(screen.getByTestId('delete')).toBeInTheDocument();
+    expect(screen.getByTestId('cancel-button')).toBeInTheDocument();
+    expect(screen.getByTestId('deactive-button')).toBeInTheDocument();
     expect(
-      screen.getByText('Are you sure you want to delete the Admin?')
+      screen.getByText('Are you sure you want to Deactive the Admin?')
     ).toBeInTheDocument();
 
     const cancelButton = getByRole('button', {
@@ -34,7 +33,7 @@ describe('Tests for Delete Admin Popup  ', () => {
     fireEvent.click(cancelButton);
 
     act(() => {
-      expect(setDeleteAdmin).toBeCalled();
+      expect(setDeactiveAdmin).toBeCalled();
     });
   });
 });

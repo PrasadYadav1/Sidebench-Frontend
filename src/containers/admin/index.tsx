@@ -11,6 +11,7 @@ import { AdminApiResponse, AdminApiProps } from './types';
 import DeleteAdmin from '../../components/deleteAdmin';
 import AdminTableMenu from '../../components/adminMenuItem';
 import { getApiErrorMessage } from '../../utils/commonHelpers';
+import DeactiveAdmin from '../../components/deactiveAdmin';
 
 const getAdminsList = async (
   page: number,
@@ -45,9 +46,13 @@ const Admin = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [search, setSearch] = useState('');
   const [deleteAdmin, setDeleteAdmin] = useState<boolean>(false);
+  const [deactiveAdmin, setDeactiveAdmin] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number>(0);
   const [openErrorToast, setErrorToast] = useState(false);
   const [toastErrorMsg, setToastErrorMsg] = useState('');
+
+  const [openSuccessToast, setOpenSuccessToast] = useState<boolean>(false);
+  const [toastSuccessMsg, setToastSuccessMsg] = useState<string>('');
 
   const onDateRangeChange = async (dates: [Date | null, Date | null]) => {
     setDateRange((prev) => ({ ...prev, start: dates[0], end: dates[1] }));
@@ -103,6 +108,10 @@ const Admin = () => {
     setErrorToast(false);
   };
 
+  const onSuccessToastClose = () => {
+    setOpenSuccessToast(false);
+  };
+
   useEffect(function onLoad() {
     const getAdmins = async () => {
       const adminData = await getAdminsList(
@@ -139,7 +148,16 @@ const Admin = () => {
         severity="error"
         onClose={onErrorToastClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        alertStyles={styles.errorToast}
+        alertStyles={styles.toastText}
+      />
+      <Toast
+        id="admin-success"
+        open={openSuccessToast}
+        message={toastSuccessMsg}
+        severity="success"
+        onClose={onSuccessToastClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        alertStyles={styles.toastText}
       />
       <MaterialTable
         id="admin-table"
@@ -233,8 +251,14 @@ const Admin = () => {
           (rowData) => ({
             icon: () => {
               const { id } = rowData as AdminApiProps;
-              setSelectedId(id);
-              return <AdminTableMenu setDeleteAdmin={setDeleteAdmin} />;
+              return (
+                <AdminTableMenu
+                  setDeleteAdmin={setDeleteAdmin}
+                  setDeactiveAdmin={setDeactiveAdmin}
+                  selectedId={id}
+                  setSelectedId={setSelectedId}
+                />
+              );
             },
             onClick: () => {
               console.log('');
@@ -247,6 +271,20 @@ const Admin = () => {
         selectedId={selectedId}
         deleteAdmin={deleteAdmin}
         setDeleteAdmin={setDeleteAdmin}
+        setOpenSuccessToast={setOpenSuccessToast}
+        setToastSuccessMsg={setToastSuccessMsg}
+        setOpenErrorToast={setErrorToast}
+        setToastErrorMsg={setToastErrorMsg}
+      />
+
+      <DeactiveAdmin
+        selectedId={selectedId}
+        deactiveAdmin={deactiveAdmin}
+        setDeactiveAdmin={setDeactiveAdmin}
+        setOpenSuccessToast={setOpenSuccessToast}
+        setToastSuccessMsg={setToastSuccessMsg}
+        setOpenErrorToast={setErrorToast}
+        setToastErrorMsg={setToastErrorMsg}
       />
     </div>
   );

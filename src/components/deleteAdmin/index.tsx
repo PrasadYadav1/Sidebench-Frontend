@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import getAPIUrl from '../../config';
 import { axiosInstanceWithAuth } from '../../utils/axios';
+import { getApiErrorMessage } from '../../utils/commonHelpers';
 import Popup from '../elements/popup';
 import styles from './styles';
 import DeleteAdminProps from './types';
@@ -9,11 +10,32 @@ import DeleteAdminProps from './types';
 const DeleteAdmin = ({
   selectedId,
   deleteAdmin,
-  setDeleteAdmin
+  setDeleteAdmin,
+  setOpenSuccessToast,
+  setToastSuccessMsg,
+  setOpenErrorToast,
+  setToastErrorMsg
 }: DeleteAdminProps) => {
+  const handleDelete = async () => {
+    try {
+      await axiosInstanceWithAuth.delete(
+        `${getAPIUrl()}/admins/delete-admin/${selectedId}`
+      );
+      setToastSuccessMsg('Account has been deactivated');
+      setOpenSuccessToast(true);
+      setDeleteAdmin(false);
+    } catch (error: any) {
+      if (error instanceof Error) {
+        const errMsg = getApiErrorMessage(error);
+        setToastErrorMsg(errMsg);
+        setOpenErrorToast(true);
+        setDeleteAdmin(false);
+      }
+    }
+  };
+
   return (
     <Popup
-      id="delete"
       open={deleteAdmin}
       title="Delete"
       textAlign="left"
@@ -23,28 +45,19 @@ const DeleteAdmin = ({
     >
       <>
         <Button
-          id="cancel"
-          data-testid="cancel-button"
+          data-testid="admin-cancel"
           onClick={() => setDeleteAdmin(false)}
           style={styles.cancel}
         >
           Cancel
         </Button>
         <Button
-          id="delete-button"
-          data-testid="delete-button"
+          data-testid="delete"
           variant="contained"
           color="secondary"
           style={styles.delete}
-          onClick={async () => {
-            try {
-              await axiosInstanceWithAuth.delete(
-                `${getAPIUrl()}/admins/delete-admin/${selectedId}`
-              );
-              setDeleteAdmin(false);
-            } catch (error: any) {
-              console.log(error);
-            }
+          onClick={() => {
+            handleDelete();
           }}
         >
           Delete
