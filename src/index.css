@@ -69,11 +69,14 @@
   font-family: Jakarta_Text_Regular;
   src: url(./assets/fonts/PlusJakartaText-Regular.otf);
 }
+
 /* button[class*="materialui-daterange-picker-makeStyles-filled"]
 {
   background-color: #313131 !important;
 } */
-.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range,
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
 .react-datepicker__month-text--selected,
 .react-datepicker__month-text--in-selecting-range,
 .react-datepicker__month-text--in-range,
@@ -87,9 +90,11 @@
   background-color: #313131 !important;
   color: #fff;
 }
+
 .react-datepicker__day.react-datepicker__day--keyboard-selected {
   background: none !important;
-  color: #313131 !important;;
+  color: #313131 !important;
+  ;
 }
 
 .react-datepicker {
@@ -99,11 +104,43 @@
   line-height: 20px !important;
 }
 
-.react-datepicker__input-container input{
-   height: 24px !important;
-   border: 1px solid #E4E4E4;
-   border-radius: 4px;
-   font-weight: 400;
-   font-size: 14px;
-   background: #FFFFFF;
+.react-datepicker__input-container input {
+  height: 24px !important;
+  border: 1px solid #E4E4E4;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  background: #FFFFFF;
+}
+
+/* Media Query for Mobile Devices */
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/* Media Query for Laptops and Desktops */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  body {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/* Media Query for Large screens */
+@media (min-width: 1281px) {
+  body {
+    height: 100%;
+    width: 100%;
+  }
 }

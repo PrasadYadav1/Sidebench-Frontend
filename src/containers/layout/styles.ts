@@ -2,7 +2,8 @@ const styles = {
   layout_conatiner: {
     display: 'flex',
     flexDirection: 'column' as unknown as 'column',
-    height: 1080,
+    height: '100%',
+    width: '100%',
     background: '#E5E5E5'
   },
 
@@ -13,19 +14,18 @@ const styles = {
 
   left_pannel: {
     position: 'absolute' as unknown as 'absolute',
-    width: 240,
-    height: 990,
-    left: 0,
-    top: 90,
+    width: '20%',
+    height: '90%',
+    top: '10%',
     background: '#FFFFFF'
   },
   outlet: {
     position: 'absolute' as unknown as 'absolute',
     flexGrow: 1,
-    left: 240,
-    top: 90,
-    right: 0,
-    height: 990
+    left: '20%',
+    top: '10%',
+    right: '0%',
+    height: '90%'
   }
 };
 

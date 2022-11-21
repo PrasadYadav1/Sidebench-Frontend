@@ -2,8 +2,9 @@ import { createTheme } from '@mui/material';
 
 const styles = {
   appBar: {
-    height: '90px',
+    height: '10%',
     boxShadow: 'none',
+    position: 'absolute',
     borderBottom: '1px solid #E4E4E4',
     justifyContent: 'center'
   },
