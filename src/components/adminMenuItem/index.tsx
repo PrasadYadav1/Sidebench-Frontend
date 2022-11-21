@@ -16,6 +16,7 @@ const AdminTableMenu = ({
     <div
       style={styles.actionMenuBtn}
       id="basic-button"
+      data-testid="basic-button"
       aria-controls={open ? 'basic-menu' : undefined}
       aria-haspopup="true"
       aria-expanded={open ? 'true' : undefined}
@@ -39,6 +40,8 @@ const AdminTableMenu = ({
         }}
       >
         <MenuItem
+        role="button"
+        data-testid="delete-item"
           onClick={() => {
             setSelectedId(selectedId);
             setDeleteAdmin(true);
@@ -48,6 +51,8 @@ const AdminTableMenu = ({
           delete
         </MenuItem>
         <MenuItem
+        role='button'
+        data-testid="deactive-item"
           onClick={() => {
             setSelectedId(selectedId);
             setDeactiveAdmin(true);

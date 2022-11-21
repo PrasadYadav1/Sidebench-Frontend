@@ -1,39 +1,16 @@
 import { Button } from '@mui/material';
-import axios from 'axios';
 import getAPIUrl from '../../config';
-import { axiosInstanceWithAuth } from '../../utils/axios';
+import { deleteApiWithAuth } from '../../utils/apis';
 import { getApiErrorMessage } from '../../utils/commonHelpers';
 import Popup from '../elements/popup';
 import styles from './styles';
 import DeleteAdminProps from './types';
 
 const DeleteAdmin = ({
-  selectedId,
   deleteAdmin,
   setDeleteAdmin,
-  setOpenSuccessToast,
-  setToastSuccessMsg,
-  setOpenErrorToast,
-  setToastErrorMsg
+  handleDelete
 }: DeleteAdminProps) => {
-  const handleDelete = async () => {
-    try {
-      await axiosInstanceWithAuth.delete(
-        `${getAPIUrl()}/admins/delete-admin/${selectedId}`
-      );
-      setToastSuccessMsg('Account has been deactivated');
-      setOpenSuccessToast(true);
-      setDeleteAdmin(false);
-    } catch (error: any) {
-      if (error instanceof Error) {
-        const errMsg = getApiErrorMessage(error);
-        setToastErrorMsg(errMsg);
-        setOpenErrorToast(true);
-        setDeleteAdmin(false);
-      }
-    }
-  };
-
   return (
     <Popup
       open={deleteAdmin}
@@ -56,9 +33,7 @@ const DeleteAdmin = ({
           variant="contained"
           color="secondary"
           style={styles.delete}
-          onClick={() => {
-            handleDelete();
-          }}
+          onClick={() => handleDelete()}
         >
           Delete
         </Button>

@@ -12,6 +12,11 @@ export const putApi = (url: string, data: any) =>
     data
   });
 
+export const deleteApiWithAuth = (url: string) =>
+  axiosInstanceWithAuth(url, {
+    method: 'DELETE'
+  });
+
 export const postApiWithAuth = (url: string, data: any) =>
   axiosInstanceWithAuth(url, {
     method: 'POST',

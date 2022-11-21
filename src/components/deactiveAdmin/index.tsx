@@ -1,19 +1,12 @@
 import { Button } from '@mui/material';
-import getAPIUrl from '../../config';
-import { putApiWithAuth } from '../../utils/apis';
-import { getApiErrorMessage } from '../../utils/commonHelpers';
 import styles from '../deleteAdmin/styles';
 import Popup from '../elements/popup';
 import DeActiveAdminProps from './types';
 
 const DeactiveAdmin = ({
-  selectedId,
   deactiveAdmin,
   setDeactiveAdmin,
-  setOpenSuccessToast,
-  setToastSuccessMsg,
-  setOpenErrorToast,
-  setToastErrorMsg
+  handleDeactive
 }: DeActiveAdminProps) => {
   return (
     <Popup
@@ -40,23 +33,7 @@ const DeactiveAdmin = ({
           variant="contained"
           color="secondary"
           style={styles.delete}
-          onClick={async () => {
-            try {
-              await putApiWithAuth(`${getAPIUrl()}/admins/deactivate-admin`, {
-                id: selectedId
-              });
-              setToastSuccessMsg('Account has been deactivated');
-              setOpenSuccessToast(true);
-              setDeactiveAdmin(false);
-            } catch (error) {
-              if (error instanceof Error) {
-                const errMsg = getApiErrorMessage(error);
-                setToastErrorMsg(errMsg);
-                setOpenErrorToast(true);
-                setDeactiveAdmin(false);
-              }
-            }
-          }}
+          onClick={async () => handleDeactive()}
         >
           Deactivate
         </Button>

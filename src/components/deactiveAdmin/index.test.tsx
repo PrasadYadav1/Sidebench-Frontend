@@ -2,21 +2,14 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import DeactiveAdmin from '.';
 
 describe('Tests for Delete Admin Popup  ', () => {
+  const setDeactiveAdmin = jest.fn();
+  const handleDeactive = jest.fn();
   it('Should popup close when click on cancel button', async () => {
-    const setDeactiveAdmin = jest.fn();
-    const setOpenErrorToast = jest.fn();
-    const setOpenSuccessToast = jest.fn();
-    const setToastErrorMsg = jest.fn();
-    const setToastSuccessMsg = jest.fn();
     const { getByRole } = render(
       <DeactiveAdmin
         deactiveAdmin
-        selectedId={0}
         setDeactiveAdmin={setDeactiveAdmin}
-        setOpenErrorToast={setOpenErrorToast}
-        setOpenSuccessToast={setOpenSuccessToast}
-        setToastErrorMsg={setToastErrorMsg}
-        setToastSuccessMsg={setToastSuccessMsg}
+        handleDeactive={handleDeactive}
       />
     );
 
@@ -32,8 +25,29 @@ describe('Tests for Delete Admin Popup  ', () => {
 
     fireEvent.click(cancelButton);
 
-    act(() => {
+    await act(async () => {
       expect(setDeactiveAdmin).toBeCalled();
     });
+  });
+
+  it('API Should call when click on Deactivate button', async () => {
+    const { getByRole } = render(
+      <DeactiveAdmin
+        deactiveAdmin
+        setDeactiveAdmin={setDeactiveAdmin}
+        handleDeactive={handleDeactive}
+      />
+    );
+
+    expect(screen.getByTestId('deactive-button')).toBeInTheDocument();
+
+    const deactiveButton = getByRole('button', {
+      name: /Deactivate/i
+    });
+
+    fireEvent.click(deactiveButton);
+
+    await act(async () => {});
+    expect(handleDeactive).toHaveBeenCalledTimes(1);
   });
 });
