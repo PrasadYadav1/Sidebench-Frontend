@@ -11,7 +11,6 @@ import { AxiosResponse } from 'axios';
 import * as apiCalls from '../../utils/apis';
 import Admin from './index';
 import adminData from '../../mock/tableData';
-import { tab } from '@testing-library/user-event/dist/tab';
 
 describe('Tests for Admin lists', () => {
   let tableData: {
@@ -122,7 +121,6 @@ describe('Tests for Admin lists', () => {
         tableData.length
       );
     });
-
     it('Menu should open when click on menu icon', async () => {
       jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
         () =>
@@ -148,7 +146,6 @@ describe('Tests for Admin lists', () => {
         expect(screen.getByTestId('deactive-item')).toBeInTheDocument();
       });
     });
-
     it('Delete Popup should open when click on delete menu item', async () => {
       jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
         () =>
@@ -181,7 +178,6 @@ describe('Tests for Admin lists', () => {
         ).toBeInTheDocument();
       });
     });
-
     it('Deactive Popup should open when click on deactive menu item', async () => {
       jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
         () =>
@@ -213,6 +209,76 @@ describe('Tests for Admin lists', () => {
           screen.getByText('Are you sure you want to Deactive the Admin?')
         ).toBeInTheDocument();
       });
+    });
+  });
+  describe('Edit Admin data', () => {
+    it('firstname and lastname values should dislay when more than 0 records', async () => {
+      jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
+        () =>
+          Promise.resolve({
+            data: {
+              data: {
+                rows: tableData,
+                count: tableData.length
+              }
+            }
+          }) as Promise<AxiosResponse<unknown>>
+      );
+      render(<Admin />);
+      await act(async () => {
+        assertCommonElements();
+      });
+      const firstName = screen.getAllByText('Toney');
+      const lastName = screen.getAllByText('Bekker');
+      expect(firstName[0]).toBeInTheDocument();
+      expect(lastName[0]).toBeInTheDocument();
+    });
+    it('Check and Clear icons should display when click on firstname', async () => {
+      jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
+        () =>
+          Promise.resolve({
+            data: {
+              data: {
+                rows: tableData,
+                count: tableData.length
+              }
+            }
+          }) as Promise<AxiosResponse<unknown>>
+      );
+      render(<Admin />);
+      await act(async () => {
+        assertCommonElements();
+      });
+      const firstName = screen.getAllByText('Toney');
+      expect(firstName[0]).toBeInTheDocument();
+      fireEvent.click(firstName[0]);
+      expect(screen.getByTestId('check')).toBeInTheDocument();
+      expect(screen.getByTestId('clear')).toBeInTheDocument();
+    });
+    it('Check and Clear icons should hide when click on clear icon', async () => {
+      jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
+        () =>
+          Promise.resolve({
+            data: {
+              data: {
+                rows: tableData,
+                count: tableData.length
+              }
+            }
+          }) as Promise<AxiosResponse<unknown>>
+      );
+      render(<Admin />);
+      await act(async () => {
+        assertCommonElements();
+      });
+      const firstName = screen.getAllByText('Toney');
+      expect(firstName[0]).toBeInTheDocument();
+      fireEvent.click(firstName[0]);
+      expect(screen.getByTestId('check')).toBeInTheDocument();
+      expect(screen.getByTestId('clear')).toBeInTheDocument();
+      fireEvent.click(screen.getByTestId('clear'));
+      expect(screen.queryByTestId('check')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('clear')).not.toBeInTheDocument();
     });
   });
   describe('Admin data on search', () => {

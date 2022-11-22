@@ -215,7 +215,7 @@ const Admin = () => {
           },
           {
             title: 'Last Name',
-            field: 'firstname',
+            field: 'lastname',
             editable: 'always',
             cellStyle: styles.columnDefault
           },
@@ -272,10 +272,32 @@ const Admin = () => {
         data={data}
         cellEditable={{
           isCellEditable: () => true,
-          onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+          onCellEditApproved: async (
+            newValue,
+            oldValue,
+            rowData,
+            columnDef
+          ) => {
+            const { firstname, lastname, id } = rowData as AdminApiProps;
+            try {
+              await putApiWithAuth(`${getAPIUrl()}/admins/update-admin`, {
+                id,
+                firstname:
+                  columnDef.field === 'firstname' ? newValue : firstname,
+                lastname: columnDef.field === 'lastname' ? newValue : lastname
+              });
+              setFetchAgain(!fetchAgain);
+              setToastSuccessMsg('Updated successfully');
+              setOpenSuccessToast(true);
+            } catch (error) {
+              if (error instanceof Error) {
+                const errMsg = getApiErrorMessage(error);
+                setToastErrorMsg(errMsg);
+                setErrorToast(true);
+              }
+            }
             return new Promise((resolve) => {
-              console.log(`newValue: ${newValue}`);
-              setTimeout(resolve, 4000);
+              console.log(resolve);
             });
           }
         }}
