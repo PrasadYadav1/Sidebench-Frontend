@@ -1,18 +1,10 @@
 const styles = {
   container: {
-    paddingLeft: '24px',
-    paddingRight: '24px',
-    paddingTop: '40px'
-  },
-  analytic1: {
-    width: '270px',
-    height: '159px',
-    background: '#313131',
-    boxShadow: '0px 7px 32px rgba(49, 49, 49, 0.24)',
-    borderRadius: '8px'
+    height: '90%',
+    padding: '2%'
   },
   analytics: {
-    width: '270px',
+    width: '23%',
     height: '159px',
     background: '#FFFFFF',
     boxShadow: '0px 7px 32px rgba(49, 49, 49, 0.24)',
@@ -106,10 +98,10 @@ const styles = {
     gap: '8px'
   },
   look_book_order_container: {
-    width: '320px'
+    width: '33%'
   },
   look_book_order_inside_container: {
-    width: '320px',
+    width: '100%',
     height: '60px',
     background: '#FFFFFF',
     border: '1px solid #E6E6E6',
@@ -200,20 +192,18 @@ const styles = {
   },
   fixed_orders_container: {
     boxSizing: 'border-box' as unknown as 'border-box',
-    width: '210px',
-    height: '317px',
+    width: '23%',
+    height: '50%',
     border: '1px solid #E6E6E6',
     borderRadius: '8px',
     display: 'flex'
   },
   fixed_orders_image: {
-    width: '210px',
-    height: '317px'
+    width: '100%',
+    height: '100%'
   },
   fixed_order_image_text1: {
     position: 'absolute' as unknown as 'absolute',
-    width: '60px',
-    height: '22px',
     fontFamily: 'Cormorant',
     fontWeight: 300,
     fontSize: '18px',
@@ -221,12 +211,10 @@ const styles = {
     letterSpacing: '-0.5px',
     color: '#FFFFFF',
     marginTop: '16px',
-    marginLeft: '140px'
+    marginLeft: '14%'
   },
   fixed_order_image_text2: {
     position: 'absolute' as unknown as 'absolute',
-    width: '176px',
-    height: '49px',
     fontFamily: 'Cinzel',
     fontWeight: 700,
     fontSize: '36px',
@@ -235,34 +223,33 @@ const styles = {
     letterSpacing: '-0.5px',
     color: '#FFFFFF',
     transform: 'rotate(-90deg)',
-    marginLeft: '-63px',
-    marginTop: '208px'
+    marginLeft: '-4%',
+    marginTop: '21.5%'
   },
   fixed_order_image_text3: {
     position: 'absolute' as unknown as 'absolute',
-    width: '107px',
-    height: '26px',
     fontFamily: 'Cinzel',
     fontWeight: 700,
     fontSize: '14px',
     lineHeight: '26px',
     textAlign: 'center' as unknown as 'center',
     color: '#F7F7F7',
-    marginTop: '260px',
-    marginLeft: '100px'
+    marginTop: '27%',
+    marginLeft: '12%'
   },
   fixed_order_image_text4: {
     position: 'absolute' as unknown as 'absolute',
-    width: '65px',
-    height: '16px',
     fontFamily: 'Cinzel',
     fontWeight: 400,
     fontSize: '12px',
     lineHeight: '16px',
     textAlign: 'center' as unknown as 'center',
     color: '#F8F8F8',
-    marginLeft: '136px',
-    marginTop: '285px'
+    marginLeft: '12%',
+    marginTop: '29%'
+  },
+  errorToast: {
+    fontFamily: 'Jakarta_Text_Light'
   }
 };
 export default styles;

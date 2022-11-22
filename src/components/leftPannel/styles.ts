@@ -6,7 +6,7 @@ const styles = {
     height: '56px'
   },
   nav_link: {
-    width: '240px',
+    width: '20%',
     textDecoration: 'none'
   },
   active: {
@@ -21,6 +21,7 @@ const styles = {
   },
   text: {
     height: '20px',
+    width: '7rem',
     fontFamily: 'Jakarta_Text_Regular',
     fontWeight: 400,
     fontSize: '16px',

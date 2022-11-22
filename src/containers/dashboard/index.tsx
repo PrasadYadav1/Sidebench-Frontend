@@ -9,12 +9,20 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
-import React from 'react';
+import { AxiosResponse } from 'axios';
+import React, { useEffect, useState } from 'react';
 import InputField from '../../components/elements/inputField';
+import Toast from '../../components/elements/toast';
 import { theme } from '../../components/header/styles';
-import { ORDERS_DATA } from '../../utils/constants';
+import getAPIUrl from '../../config';
+import { getApi } from '../../utils/apis';
+import { getApiErrorMessage } from '../../utils/commonHelpers';
 import styles from './styles';
-import OrdersData, { TabPanelProps } from './types';
+import TabPanelProps, {
+  LookBooksApiProps,
+  LookBooksApiResponse,
+  LookBooksApiRows
+} from './types';
 
 const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
@@ -32,29 +40,27 @@ const TabPanel = (props: TabPanelProps) => {
   );
 };
 
-const LookBookOrders: React.FC<{ ordersData: OrdersData[] }> = ({
-  ordersData
+const LookBookOrders: React.FC<{ lookBooksData: LookBooksApiProps[] }> = ({
+  lookBooksData
 }) => {
   return (
     <div style={styles.dg}>
-      {ordersData.map(({ date, imgSource, name }) => (
-        <div style={styles.orders}>
+      {lookBooksData.map(({ dueBy, customerId }) => (
+        <div style={styles.orders} key={customerId}>
           <div style={styles.df}>
-            <img alt="" src={imgSource} />
+            <img alt="" src="" />
             <Typography component="div" sx={styles.order_text_container}>
               <Typography
                 data-testid="order-text1"
                 component="div"
                 sx={styles.order_text1}
-              >
-                {name}
-              </Typography>
+              />
               <Typography
                 data-testid="order-text2"
                 component="div"
                 sx={styles.order_text2}
               >
-                {date}
+                {new Intl.DateTimeFormat('en-US').format(new Date(dueBy))}
               </Typography>
             </Typography>
           </div>
@@ -72,7 +78,11 @@ const LookBookOrders: React.FC<{ ordersData: OrdersData[] }> = ({
 const EmptyLookBooks = () => {
   return (
     <Box sx={styles.empty_look_books}>
-      <Typography component="div" style={styles.empty_look_book_text}>
+      <Typography
+        data-testid="empty-lookbooks"
+        component="div"
+        style={styles.empty_look_book_text}
+      >
         No Orders in Queue of LookBooks
       </Typography>
     </Box>
@@ -81,7 +91,7 @@ const EmptyLookBooks = () => {
 
 const FinishedOrders = () => {
   return (
-    <Typography component="div" style={styles.fixed_orders_container}>
+    <div style={styles.fixed_orders_container}>
       <img
         alt=""
         src="/images/new-order-img.png"
@@ -93,14 +103,56 @@ const FinishedOrders = () => {
         Monica Smith
       </Typography>
       <Typography style={styles.fixed_order_image_text4}>09/01/2022</Typography>
-    </Typography>
+    </div>
   );
 };
 
+const getLookBooks = async (): Promise<Error | LookBooksApiResponse> => {
+  try {
+    const adminData: AxiosResponse<LookBooksApiResponse> = await getApi(
+      `${getAPIUrl()}/admins/lookbooks`
+    );
+    return adminData.data;
+  } catch (error) {
+    return error as Error;
+  }
+};
+
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = React.useState<number>(1);
+  const [activeTab, setActiveTab] = useState<number>(1);
+  const [openErrorToast, setErrorToast] = useState<boolean>(false);
+  const [toastErrorMsg, setToastErrorMsg] = useState<string>('');
+  const [lookBooksData, setLookBooksData] = useState<LookBooksApiRows>();
+
+  const onErrorToastClose = () => {
+    setErrorToast(false);
+  };
+
+  useEffect(function onLoad() {
+    const getLookBooksData = async () => {
+      const adminData = await getLookBooks();
+      if (adminData instanceof Error) {
+        const errMsg = getApiErrorMessage(adminData);
+        setToastErrorMsg(errMsg);
+        setErrorToast(true);
+      } else {
+        setLookBooksData(adminData.data.rows);
+      }
+    };
+    getLookBooksData();
+  }, []);
+
   return (
     <div style={styles.container}>
+      <Toast
+        id="lookbook-error"
+        open={openErrorToast}
+        message={toastErrorMsg}
+        severity="error"
+        onClose={onErrorToastClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        alertStyles={styles.errorToast}
+      />
       <Stack direction="row" spacing={2}>
         <div style={styles.analytics}>
           <img src="/images/people.png" alt="" style={styles.analytics_image} />
@@ -184,6 +236,7 @@ const Dashboard = () => {
         </Typography>
         <Tabs
           value={activeTab}
+          data-testid="lookbook-tabs"
           style={styles.lookbook_order_tabs}
           TabIndicatorProps={{ style: styles.indicator }}
           onChange={(_event: React.SyntheticEvent, newValue: number) =>
@@ -288,87 +341,96 @@ const Dashboard = () => {
       </ThemeProvider>
 
       <TabPanel value={activeTab} index={1}>
-        <Stack direction="row" spacing={2} style={styles.mt}>
-          <div style={styles.look_book_order_container}>
-            <div style={styles.look_book_order_inside_container}>
-              <Typography
-                component="div"
-                style={styles.look_book_order_container_text}
-              >
+        {lookBooksData?.['In Progress'].length &&
+        lookBooksData.Queued.length &&
+        lookBooksData['To Do'].length ? (
+          <Stack direction="row" spacing={2} style={styles.mt}>
+            <div style={styles.look_book_order_container}>
+              <div style={styles.look_book_order_inside_container}>
                 <Typography
-                  data-testid="to-do"
-                  style={styles.look_book_order_text}
+                  component="div"
+                  style={styles.look_book_order_container_text}
                 >
-                  To Do
+                  <Typography
+                    data-testid="to-do"
+                    style={styles.look_book_order_text}
+                  >
+                    To Do
+                  </Typography>
+                  <Typography
+                    data-testid="dot1"
+                    style={styles.look_book_order_text2}
+                  >
+                    .
+                  </Typography>
+                  <Typography
+                    data-testid="to-do-count"
+                    style={styles.look_book_order_text3}
+                  >
+                    {lookBooksData?.['To Do'].length}
+                  </Typography>
                 </Typography>
-                <Typography
-                  data-testid="dot1"
-                  style={styles.look_book_order_text2}
-                >
-                  .
-                </Typography>
-                <Typography
-                  data-testid="to-do-count"
-                  style={styles.look_book_order_text3}
-                >
-                  15
-                </Typography>
-              </Typography>
+              </div>
+              <LookBookOrders lookBooksData={lookBooksData?.['To Do'] || []} />
             </div>
-            <LookBookOrders ordersData={ORDERS_DATA} />
-          </div>
-          <div style={styles.look_book_order_container}>
-            <div style={styles.look_book_order_inside_container}>
-              <Typography style={styles.look_book_order_container_text}>
-                <Typography
-                  data-testid="in-progress"
-                  style={styles.look_book_order_text}
-                >
-                  In Progress
+            <div style={styles.look_book_order_container}>
+              <div style={styles.look_book_order_inside_container}>
+                <Typography style={styles.look_book_order_container_text}>
+                  <Typography
+                    data-testid="in-progress"
+                    style={styles.look_book_order_text}
+                  >
+                    In Progress
+                  </Typography>
+                  <Typography
+                    data-testid="dot2"
+                    style={styles.look_book_order_text2}
+                  >
+                    .
+                  </Typography>
+                  <Typography
+                    data-testid="in-progress-count"
+                    style={styles.look_book_order_text3}
+                  >
+                    {lookBooksData?.['In Progress'].length}
+                  </Typography>
                 </Typography>
-                <Typography
-                  data-testid="dot2"
-                  style={styles.look_book_order_text2}
-                >
-                  .
-                </Typography>
-                <Typography
-                  data-testid="in-progress-count"
-                  style={styles.look_book_order_text3}
-                >
-                  15
-                </Typography>
-              </Typography>
+              </div>
+              <LookBookOrders
+                lookBooksData={lookBooksData?.['In Progress'] || []}
+              />
             </div>
-            <LookBookOrders ordersData={ORDERS_DATA} />
-          </div>
-          <div style={styles.look_book_order_container}>
-            <div style={styles.look_book_order_inside_container}>
-              <Typography style={styles.look_book_order_container_text}>
-                <Typography
-                  data-testid="queued"
-                  style={styles.look_book_order_text}
-                >
-                  Queued
+            <div style={styles.look_book_order_container}>
+              <div style={styles.look_book_order_inside_container}>
+                <Typography style={styles.look_book_order_container_text}>
+                  <Typography
+                    data-testid="queued"
+                    style={styles.look_book_order_text}
+                  >
+                    Queued
+                  </Typography>
+                  <Typography
+                    data-testid="dot3"
+                    style={styles.look_book_order_text2}
+                  >
+                    .
+                  </Typography>
+                  <Typography
+                    data-testid="queued-count"
+                    style={styles.look_book_order_text3}
+                  >
+                    {lookBooksData?.Queued.length}
+                  </Typography>
                 </Typography>
-                <Typography
-                  data-testid="dot3"
-                  style={styles.look_book_order_text2}
-                >
-                  .
-                </Typography>
-                <Typography
-                  data-testid="queued-count"
-                  style={styles.look_book_order_text3}
-                >
-                  15
-                </Typography>
-              </Typography>
+              </div>
+              <LookBookOrders lookBooksData={lookBooksData?.Queued || []} />
             </div>
-            <LookBookOrders ordersData={ORDERS_DATA} />
-          </div>
-        </Stack>
+          </Stack>
+        ) : (
+          <EmptyLookBooks />
+        )}
       </TabPanel>
+
       <TabPanel value={activeTab} index={2}>
         <Stack direction="column" gap="25px" marginTop="24px">
           <Stack direction="row" gap="25px">
