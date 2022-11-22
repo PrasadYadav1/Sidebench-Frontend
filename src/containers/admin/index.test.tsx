@@ -11,6 +11,7 @@ import { AxiosResponse } from 'axios';
 import * as apiCalls from '../../utils/apis';
 import Admin from './index';
 import adminData from '../../mock/tableData';
+import { tab } from '@testing-library/user-event/dist/tab';
 
 describe('Tests for Admin lists', () => {
   let tableData: {
@@ -21,6 +22,7 @@ describe('Tests for Admin lists', () => {
     email: string;
     lastActive: string;
   }[] = [];
+
   beforeAll(() => {
     tableData = adminData.map((d) => ({
       ...d,
@@ -28,12 +30,15 @@ describe('Tests for Admin lists', () => {
       status: { name: d.status }
     }));
   });
+
   beforeEach(() => {
     jest.resetAllMocks();
   });
+
   afterAll(() => {
     jest.clearAllMocks();
   });
+
   const assertCommonElements = () => {
     expect(screen.getByText('First Name')).toBeInTheDocument();
     expect(screen.getByText('Last Name')).toBeInTheDocument();
@@ -116,6 +121,98 @@ describe('Tests for Admin lists', () => {
       expect(screen.queryAllByAltText('data-menu').length).toBe(
         tableData.length
       );
+    });
+
+    it('Menu should open when click on menu icon', async () => {
+      jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
+        () =>
+          Promise.resolve({
+            data: {
+              data: {
+                rows: tableData,
+                count: tableData.length
+              }
+            }
+          }) as Promise<AxiosResponse<unknown>>
+      );
+      render(<Admin />);
+      await act(async () => {
+        assertCommonElements();
+      });
+      expect(screen.queryAllByTestId('basic-button'));
+      const contextMenu = screen.queryAllByTestId('basic-button');
+      fireEvent.click(contextMenu[1]);
+
+      await act(async () => {
+        expect(screen.getByTestId('delete-item')).toBeInTheDocument();
+        expect(screen.getByTestId('deactive-item')).toBeInTheDocument();
+      });
+    });
+
+    it('Delete Popup should open when click on delete menu item', async () => {
+      jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
+        () =>
+          Promise.resolve({
+            data: {
+              data: {
+                rows: tableData,
+                count: tableData.length
+              }
+            }
+          }) as Promise<AxiosResponse<unknown>>
+      );
+      render(<Admin />);
+      await act(async () => {
+        assertCommonElements();
+      });
+      expect(screen.queryAllByTestId('basic-button'));
+      const contextMenu = screen.queryAllByTestId('basic-button');
+      fireEvent.click(contextMenu[1]);
+
+      await act(async () => {
+        expect(screen.getByTestId('delete-item')).toBeInTheDocument();
+      });
+
+      fireEvent.click(screen.getByTestId('delete-item'));
+
+      await act(async () => {
+        expect(
+          screen.getByText('Are you sure you want to delete the Admin?')
+        ).toBeInTheDocument();
+      });
+    });
+
+    it('Deactive Popup should open when click on deactive menu item', async () => {
+      jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
+        () =>
+          Promise.resolve({
+            data: {
+              data: {
+                rows: tableData,
+                count: tableData.length
+              }
+            }
+          }) as Promise<AxiosResponse<unknown>>
+      );
+      render(<Admin />);
+      await act(async () => {
+        assertCommonElements();
+      });
+      expect(screen.queryAllByTestId('basic-button'));
+      const contextMenu = screen.queryAllByTestId('basic-button');
+      fireEvent.click(contextMenu[1]);
+
+      await act(async () => {
+        expect(screen.getByTestId('deactive-item')).toBeInTheDocument();
+      });
+
+      fireEvent.click(screen.getByTestId('deactive-item'));
+
+      await act(async () => {
+        expect(
+          screen.getByText('Are you sure you want to Deactive the Admin?')
+        ).toBeInTheDocument();
+      });
     });
   });
   describe('Admin data on search', () => {

@@ -1,6 +1,6 @@
 interface DeleteAdminProps {
   deleteAdmin: boolean;
   setDeleteAdmin(value: React.SetStateAction<boolean>): void;
-  selectedId: number;
+  handleDelete(): void;
 }
 export default DeleteAdminProps;

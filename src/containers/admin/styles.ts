@@ -19,7 +19,7 @@ const styles = {
     height: '28px',
     borderRadius: '4px'
   },
-  errorToast: {
+  toastText: {
     fontFamily: 'Jakarta_Text_Light'
   }
 };

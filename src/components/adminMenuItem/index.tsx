@@ -3,7 +3,12 @@ import { useState } from 'react';
 import styles from '../../containers/admin/styles';
 import AdminTableMenuProps from './types';
 
-const AdminTableMenu = ({ setDeleteAdmin }: AdminTableMenuProps) => {
+const AdminTableMenu = ({
+  setDeleteAdmin,
+  setDeactiveAdmin,
+  selectedId,
+  setSelectedId
+}: AdminTableMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -11,6 +16,7 @@ const AdminTableMenu = ({ setDeleteAdmin }: AdminTableMenuProps) => {
     <div
       style={styles.actionMenuBtn}
       id="basic-button"
+      data-testid="basic-button"
       aria-controls={open ? 'basic-menu' : undefined}
       aria-haspopup="true"
       aria-expanded={open ? 'true' : undefined}
@@ -34,12 +40,26 @@ const AdminTableMenu = ({ setDeleteAdmin }: AdminTableMenuProps) => {
         }}
       >
         <MenuItem
+        role="button"
+        data-testid="delete-item"
           onClick={() => {
+            setSelectedId(selectedId);
             setDeleteAdmin(true);
             setAnchorEl(null);
           }}
         >
           delete
+        </MenuItem>
+        <MenuItem
+        role='button'
+        data-testid="deactive-item"
+          onClick={() => {
+            setSelectedId(selectedId);
+            setDeactiveAdmin(true);
+            setAnchorEl(null);
+          }}
+        >
+          deactive
         </MenuItem>
       </Menu>
     </div>

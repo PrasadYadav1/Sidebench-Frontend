@@ -5,12 +5,13 @@ import MaterialTable from '../../components/elements/table';
 import ToolBar from './toolbar';
 import Toast from '../../components/elements/toast';
 import styles from './styles';
-import { getApi } from '../../utils/apis';
+import { deleteApiWithAuth, getApi, putApiWithAuth } from '../../utils/apis';
 import getAPIUrl from '../../config';
 import { AdminApiResponse, AdminApiProps } from './types';
 import DeleteAdmin from '../../components/deleteAdmin';
 import AdminTableMenu from '../../components/adminMenuItem';
 import { getApiErrorMessage } from '../../utils/commonHelpers';
+import DeactiveAdmin from '../../components/deactiveAdmin';
 
 const getAdminsList = async (
   page: number,
@@ -45,9 +46,13 @@ const Admin = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [search, setSearch] = useState('');
   const [deleteAdmin, setDeleteAdmin] = useState<boolean>(false);
+  const [deactiveAdmin, setDeactiveAdmin] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number>(0);
   const [openErrorToast, setErrorToast] = useState(false);
   const [toastErrorMsg, setToastErrorMsg] = useState('');
+  const [fetchAgain, setFetchAgain] = useState(false);
+  const [openSuccessToast, setOpenSuccessToast] = useState<boolean>(false);
+  const [toastSuccessMsg, setToastSuccessMsg] = useState<string>('');
 
   const onDateRangeChange = async (dates: [Date | null, Date | null]) => {
     setDateRange((prev) => ({ ...prev, start: dates[0], end: dates[1] }));
@@ -103,24 +108,69 @@ const Admin = () => {
     setErrorToast(false);
   };
 
-  useEffect(function onLoad() {
-    const getAdmins = async () => {
-      const adminData = await getAdminsList(
-        page,
-        [dateRange.start, dateRange.end],
-        search
+  const onSuccessToastClose = () => {
+    setOpenSuccessToast(false);
+  };
+
+  useEffect(
+    function onLoad() {
+      const getAdmins = async () => {
+        const adminData = await getAdminsList(
+          page,
+          [dateRange.start, dateRange.end],
+          search
+        );
+        if (adminData instanceof Error) {
+          const errMsg = getApiErrorMessage(adminData);
+          setToastErrorMsg(errMsg);
+          setErrorToast(true);
+        } else {
+          setData(adminData.data.rows);
+          setTotalCount(adminData.data.count);
+        }
+      };
+      getAdmins();
+    },
+    [fetchAgain]
+  );
+
+  const handleDelete = async () => {
+    try {
+      await deleteApiWithAuth(
+        `${getAPIUrl()}/admins/delete-admin/${selectedId}`
       );
-      if (adminData instanceof Error) {
-        const errMsg = getApiErrorMessage(adminData);
+      setToastSuccessMsg('Account has been deleted');
+      setOpenSuccessToast(true);
+      setFetchAgain(!fetchAgain);
+      setDeleteAdmin(false);
+    } catch (error: any) {
+      if (error instanceof Error) {
+        const errMsg = getApiErrorMessage(error);
         setToastErrorMsg(errMsg);
         setErrorToast(true);
-      } else {
-        setData(adminData.data.rows);
-        setTotalCount(adminData.data.count);
+        setDeleteAdmin(false);
       }
-    };
-    getAdmins();
-  }, []);
+    }
+  };
+
+  const handleDeactive = async () => {
+    try {
+      await putApiWithAuth(`${getAPIUrl()}/admins/deactivate-admin`, {
+        id: selectedId
+      });
+      setToastSuccessMsg('Account has been deactivated');
+      setOpenSuccessToast(true);
+      setFetchAgain(!fetchAgain);
+      setDeactiveAdmin(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        const errMsg = getApiErrorMessage(error);
+        setToastErrorMsg(errMsg);
+        setErrorToast(true);
+        setDeactiveAdmin(false);
+      }
+    }
+  };
 
   return (
     <div style={styles.container}>
@@ -139,7 +189,16 @@ const Admin = () => {
         severity="error"
         onClose={onErrorToastClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        alertStyles={styles.errorToast}
+        alertStyles={styles.toastText}
+      />
+      <Toast
+        id="admin-success"
+        open={openSuccessToast}
+        message={toastSuccessMsg}
+        severity="success"
+        onClose={onSuccessToastClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        alertStyles={styles.toastText}
       />
       <MaterialTable
         id="admin-table"
@@ -233,8 +292,14 @@ const Admin = () => {
           (rowData) => ({
             icon: () => {
               const { id } = rowData as AdminApiProps;
-              setSelectedId(id);
-              return <AdminTableMenu setDeleteAdmin={setDeleteAdmin} />;
+              return (
+                <AdminTableMenu
+                  setDeleteAdmin={setDeleteAdmin}
+                  setDeactiveAdmin={setDeactiveAdmin}
+                  selectedId={id}
+                  setSelectedId={setSelectedId}
+                />
+              );
             },
             onClick: () => {
               console.log('');
@@ -244,9 +309,15 @@ const Admin = () => {
       />
 
       <DeleteAdmin
-        selectedId={selectedId}
         deleteAdmin={deleteAdmin}
         setDeleteAdmin={setDeleteAdmin}
+        handleDelete={handleDelete}
+      />
+
+      <DeactiveAdmin
+        deactiveAdmin={deactiveAdmin}
+        setDeactiveAdmin={setDeactiveAdmin}
+        handleDeactive={handleDeactive}
       />
     </div>
   );
