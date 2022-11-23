@@ -178,7 +178,7 @@ describe('Tests for Admin lists', () => {
         ).toBeInTheDocument();
       });
     });
-    it('Deactive Popup should open when click on deactive menu item', async () => {
+    it('Deactivate Popup should open when click on deactivate menu item', async () => {
       jest.spyOn(apiCalls, 'getApi').mockImplementationOnce(
         () =>
           Promise.resolve({
@@ -206,7 +206,7 @@ describe('Tests for Admin lists', () => {
 
       await act(async () => {
         expect(
-          screen.getByText('Are you sure you want to Deactive the Admin?')
+          screen.getByText('Are you sure you want to Deactivate the Admin?')
         ).toBeInTheDocument();
       });
     });

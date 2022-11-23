@@ -47,15 +47,25 @@ const styles = {
     height: '56px',
     border: '1px solid #E6E6E6',
     borderRadius: '99px',
-    background: '#FFFFFF',
-    marginBottom: '24px'
+    background: '#FFFFFF'
   },
   button: {
     height: '56px',
     borderRadius: '99px',
     background: '#313131',
     color: '#FFFFFF',
+    marginTop: '28.5px',
     marginBottom: '40px'
+  },
+  toastText: {
+    fontFamily: 'Jakarta_Text_Light'
+  },
+  mt: {
+    marginTop: '24px'
+  },
+  fh: {
+    borderRadius: '99px',
+    height: '56px'
   }
 };
 

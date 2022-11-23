@@ -22,6 +22,8 @@ const PasswordChangeSuccess: React.FC = () => {
         data-testid="continue-button"
         onClick={handleClick}
         sx={styles.button}
+        color="secondary"
+        variant="contained"
       >
         Continue
       </Button>

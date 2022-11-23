@@ -16,7 +16,7 @@ describe('Tests for Delete Admin Popup  ', () => {
     expect(screen.getByTestId('cancel-button')).toBeInTheDocument();
     expect(screen.getByTestId('deactive-button')).toBeInTheDocument();
     expect(
-      screen.getByText('Are you sure you want to Deactive the Admin?')
+      screen.getByText('Are you sure you want to Deactivate the Admin?')
     ).toBeInTheDocument();
 
     const cancelButton = getByRole('button', {

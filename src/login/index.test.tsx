@@ -38,7 +38,7 @@ describe('SignIn Container test', () => {
       await screen.findByText('Please provide a valid email address')
     ).toBeInTheDocument();
     expect(
-      await screen.findByText('Password length must be 8 characters')
+      await screen.findByText('Password must be atleast 8 characters long')
     ).toBeInTheDocument();
   });
 
@@ -63,7 +63,7 @@ describe('SignIn Container test', () => {
       await screen.findByText('Please provide a valid email address')
     ).toBeInTheDocument();
     expect(
-      await screen.findByText('Password length must be 8 characters')
+      await screen.findByText('Password must be atleast 8 characters long')
     ).toBeInTheDocument();
   });
 });

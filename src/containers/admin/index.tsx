@@ -136,9 +136,7 @@ const Admin = () => {
 
   const handleDelete = async () => {
     try {
-      await deleteApiWithAuth(
-        `${getAPIUrl()}/admins/delete-admin/${selectedId}`
-      );
+      await deleteApiWithAuth(`${getAPIUrl()}/admins/${selectedId}`);
       setToastSuccessMsg('Account has been deleted');
       setOpenSuccessToast(true);
       setFetchAgain(!fetchAgain);
@@ -313,12 +311,11 @@ const Admin = () => {
         actions={[
           (rowData) => ({
             icon: () => {
-              const { id } = rowData as AdminApiProps;
               return (
                 <AdminTableMenu
                   setDeleteAdmin={setDeleteAdmin}
                   setDeactiveAdmin={setDeactiveAdmin}
-                  selectedId={id}
+                  rowData={rowData as AdminApiProps}
                   setSelectedId={setSelectedId}
                 />
               );

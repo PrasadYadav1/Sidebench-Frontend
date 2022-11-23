@@ -6,7 +6,7 @@ import AdminTableMenuProps from './types';
 const AdminTableMenu = ({
   setDeleteAdmin,
   setDeactiveAdmin,
-  selectedId,
+  rowData,
   setSelectedId
 }: AdminTableMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -43,24 +43,26 @@ const AdminTableMenu = ({
           role="button"
           data-testid="delete-item"
           onClick={() => {
-            setSelectedId(selectedId);
+            setSelectedId(rowData.id);
             setDeleteAdmin(true);
             setAnchorEl(null);
           }}
         >
-          delete
+          Delete
         </MenuItem>
-        <MenuItem
-          role="button"
-          data-testid="deactive-item"
-          onClick={() => {
-            setSelectedId(selectedId);
-            setDeactiveAdmin(true);
-            setAnchorEl(null);
-          }}
-        >
-          deactive
-        </MenuItem>
+        {rowData.statusId !== 3 && (
+          <MenuItem
+            role="button"
+            data-testid="deactive-item"
+            onClick={() => {
+              setSelectedId(rowData.id);
+              setDeactiveAdmin(true);
+              setAnchorEl(null);
+            }}
+          >
+            Deactivate
+          </MenuItem>
+        )}
       </Menu>
     </div>
   );

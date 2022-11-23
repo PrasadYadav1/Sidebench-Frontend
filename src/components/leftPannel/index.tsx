@@ -106,11 +106,11 @@ const LeftPannel = () => {
       <Popup
         id="logout"
         open={logout}
-        title="Log Out"
+        title="Logout"
         textAlign="left"
         handleClose={() => setLogout(false)}
         description={
-          <>Are you sure you want to sign out from the Admin Portal?</>
+          <>Are you sure you want to logout from the Admin Portal?</>
         }
         style={styles.popup_width}
       >

@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { object, string } from 'zod';
-import InputField from '../elements/inputField';
+import InputField from '../../components/elements/inputField';
 import styles from './styles';
 import InputData from './types';
 
@@ -60,6 +60,8 @@ const ForgotPassword: React.FC = () => {
             data-testid="send-email-button"
             sx={styles.button}
             type="submit"
+            color="secondary"
+            variant="contained"
           >
             Send Email
           </Button>
