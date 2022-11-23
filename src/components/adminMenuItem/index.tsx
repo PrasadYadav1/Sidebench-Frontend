@@ -40,8 +40,8 @@ const AdminTableMenu = ({
         }}
       >
         <MenuItem
-        role="button"
-        data-testid="delete-item"
+          role="button"
+          data-testid="delete-item"
           onClick={() => {
             setSelectedId(selectedId);
             setDeleteAdmin(true);
@@ -51,8 +51,8 @@ const AdminTableMenu = ({
           delete
         </MenuItem>
         <MenuItem
-        role='button'
-        data-testid="deactive-item"
+          role="button"
+          data-testid="deactive-item"
           onClick={() => {
             setSelectedId(selectedId);
             setDeactiveAdmin(true);

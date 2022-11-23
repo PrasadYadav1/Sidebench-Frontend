@@ -1,7 +1,4 @@
 import { Button } from '@mui/material';
-import getAPIUrl from '../../config';
-import { deleteApiWithAuth } from '../../utils/apis';
-import { getApiErrorMessage } from '../../utils/commonHelpers';
 import Popup from '../elements/popup';
 import styles from './styles';
 import DeleteAdminProps from './types';
