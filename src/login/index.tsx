@@ -25,7 +25,7 @@ const validationSchema = object({
   }).email({ message: 'Please provide a valid email address' }),
   password: string({
     required_error: 'Please provide a password'
-  }).min(8, 'Password must be atleast 8 characters long')
+  }).min(8, 'Password must be at least 8 characters long')
 });
 
 const Login: React.FC = () => {
