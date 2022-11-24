@@ -77,10 +77,17 @@ const styles = {
   },
   app_bar: {
     height: '48px',
-    borderBottom: '1px solid #E4E4E4',
+    border: '1px solid #E7E5E5',
     borderRadius: '99px',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    background: '#FFFFFF'
   },
+  date_filter: {
+    display: 'flex',
+    gap: '8px',
+    padding: '12px'
+  },
+
   line: {
     width: '2px',
     height: '20px'
@@ -163,6 +170,14 @@ const styles = {
     fontSize: '12px',
     lineHeight: '16px',
     color: '#7F7F7F'
+  },
+  order_text_looks: {
+    fontFamily: 'Jakarta_Text_Regular',
+    fontWeight: 500,
+    fontSize: '12px',
+    lineHeight: '16px',
+    color: '#313131',
+    paddingTop: '12px'
   },
   dg: {
     display: 'grid'

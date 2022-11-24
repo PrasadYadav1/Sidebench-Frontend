@@ -1,19 +1,8 @@
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Stack,
-  Tab,
-  Tabs,
-  ThemeProvider,
-  Toolbar,
-  Typography
-} from '@mui/material';
+import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { AxiosResponse } from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import InputField from '../../components/elements/inputField';
 import Toast from '../../components/elements/toast';
-import { theme } from '../../components/header/styles';
 import getAPIUrl from '../../config';
 import { getApi } from '../../utils/apis';
 import { getApiErrorMessage } from '../../utils/commonHelpers';
@@ -23,6 +12,7 @@ import TabPanelProps, {
   LookBooksApiResponse,
   LookBooksApiRows
 } from './types';
+import DateRangePicker from '../../components/elements/daterangepicker';
 
 const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
@@ -45,30 +35,33 @@ const LookBookOrders: React.FC<{ lookBooksData: LookBooksApiProps[] }> = ({
 }) => {
   return (
     <div style={styles.dg}>
-      {lookBooksData.map(({ dueBy, customerId }) => (
+      {lookBooksData.map(({ dueBy, customerId, noOfLooks }) => (
         <div style={styles.orders} key={customerId}>
           <div style={styles.df}>
-            <img alt="" src="" />
             <Typography component="div" sx={styles.order_text_container}>
               <Typography
                 data-testid="order-text1"
                 component="div"
                 sx={styles.order_text1}
-              />
+              >
+                Monica Smith
+              </Typography>
               <Typography
                 data-testid="order-text2"
                 component="div"
                 sx={styles.order_text2}
               >
-                {new Intl.DateTimeFormat('en-US').format(new Date(dueBy))}
+                {`Due by: ${new Intl.DateTimeFormat('en-US').format(
+                  new Date(dueBy)
+                )}`}
               </Typography>
             </Typography>
           </div>
-          <Typography component="div">
-            <IconButton aria-label="more" id="long-button" aria-haspopup="true">
-              <img alt="" src="/images/more-vertical.png" />
-            </IconButton>
-          </Typography>
+          <Typography
+            data-testid="order-text-looks"
+            component="div"
+            sx={styles.order_text_looks}
+          >{`${noOfLooks} Looks`}</Typography>
         </div>
       ))}
     </div>
@@ -107,10 +100,20 @@ const FinishedOrders = () => {
   );
 };
 
-const getLookBooks = async (): Promise<Error | LookBooksApiResponse> => {
+const getLookBooks = async (
+  dates: [Date | null, Date | null],
+  searchText?: string
+): Promise<Error | LookBooksApiResponse> => {
   try {
+    let url = `/admins/lookbooks?`;
+
+    url = searchText ? `${url}&search=${searchText}` : url;
+
+    if (dates[0] && dates[1]) {
+      url = `${url}&fromDate=${dates[0]}&toDate=${dates[1]}`;
+    }
     const adminData: AxiosResponse<LookBooksApiResponse> = await getApi(
-      `${getAPIUrl()}/admins/lookbooks`
+      `${getAPIUrl()}${url}`
     );
     return adminData.data;
   } catch (error) {
@@ -123,14 +126,52 @@ const Dashboard = () => {
   const [openErrorToast, setErrorToast] = useState<boolean>(false);
   const [toastErrorMsg, setToastErrorMsg] = useState<string>('');
   const [lookBooksData, setLookBooksData] = useState<LookBooksApiRows>();
+  const [searchText, setSearchText] = useState<string>('');
+  const [dateRange, setDateRange] = useState<{
+    start: Date | null;
+    end: Date | null;
+  }>({ start: null, end: null });
 
   const onErrorToastClose = () => {
     setErrorToast(false);
   };
 
+  const onSearchChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setSearchText(val);
+    const lookbooksData = await getLookBooks(
+      [dateRange.start, dateRange.end],
+      searchText
+    );
+    if (lookbooksData instanceof Error) {
+      const errMsg = getApiErrorMessage(lookbooksData);
+      setToastErrorMsg(errMsg);
+      setErrorToast(true);
+    } else {
+      setLookBooksData(lookbooksData.data.rows);
+    }
+  };
+
+  const onDateRangeChange = async (dates: [Date | null, Date | null]) => {
+    setDateRange((prev) => ({ ...prev, start: dates[0], end: dates[1] }));
+    if ((dates[0] && dates[1]) || (!dates[0] && !dates[1])) {
+      const lookbooksData = await getLookBooks(dates, searchText);
+      if (lookbooksData instanceof Error) {
+        const errMsg = getApiErrorMessage(lookbooksData);
+        setToastErrorMsg(errMsg);
+        setErrorToast(true);
+      } else {
+        setLookBooksData(lookbooksData.data.rows);
+      }
+    }
+  };
+
   useEffect(function onLoad() {
     const getLookBooksData = async () => {
-      const adminData = await getLookBooks();
+      const adminData = await getLookBooks(
+        [dateRange.start, dateRange.end],
+        searchText
+      );
       if (adminData instanceof Error) {
         const errMsg = getApiErrorMessage(adminData);
         setToastErrorMsg(errMsg);
@@ -263,87 +304,49 @@ const Dashboard = () => {
           />
         </Tabs>
       </Stack>
-      <ThemeProvider theme={theme}>
-        <AppBar position="sticky" color="secondary" style={styles.app_bar}>
-          <Toolbar>
-            <Typography
-              component="div"
-              sx={{
-                flexGrow: 1
-              }}
-            >
-              <InputField
-                id="search"
-                name="search"
-                type="text"
-                placeholder="Search item"
-                showSearchIcon
-                variant="standard"
-                showBorder={false}
-                size="small"
-              />
-            </Typography>
-            <Typography>
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="center"
-                gap={1}
-              >
-                <img alt="" src="/images/line.png" style={styles.line} />
-                <div style={styles.actions_container}>
-                  <img alt="" src="/images/location.png" />
-                  <Typography
-                    data-testid="action-test1"
-                    style={styles.search_dashboard_actions}
-                  >
-                    Any occation
-                  </Typography>
-                  <img alt="" src="/images/arrow-down.png" />
-                </div>
-                <img alt="" src="/images/line.png" style={styles.line} />
-                <div style={styles.actions_container}>
-                  <img alt="" src="/images/calendar.png" />
-                  <Typography
-                    data-testid="action-test2"
-                    style={styles.search_dashboard_actions}
-                  >
-                    Any date
-                  </Typography>
-                  <img alt="" src="/images/arrow-down.png" />
-                </div>
-                <img alt="" src="/images/line.png" style={styles.line} />
-                <div style={styles.actions_container}>
-                  <img alt="" src="/images/eye.png" />
-                  <Typography
-                    data-testid="action-test3"
-                    style={styles.search_dashboard_actions}
-                  >
-                    Any looks
-                  </Typography>
-                  <img alt="" src="/images/arrow-down.png" />
-                </div>
-                <img alt="" src="/images/line.png" style={styles.line} />
-                <div style={styles.actions_container}>
-                  <img alt="" src="/images/status.png" />
-                  <Typography
-                    data-testid="action-test4"
-                    style={styles.search_dashboard_actions}
-                  >
-                    Any status
-                  </Typography>
-                  <img alt="" src="/images/arrow-down.png" />
-                </div>
-              </Stack>
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+      <div style={styles.actions_container}>
+        <Typography component="div" sx={{ ...styles.app_bar, flexGrow: 1 }}>
+          <InputField
+            id="search"
+            name="search"
+            type="text"
+            placeholder="Search item"
+            showSearchIcon
+            variant="standard"
+            showBorder={false}
+            size="small"
+            onChange={onSearchChange}
+            data-testid="lookbook-search"
+          />
+        </Typography>
+        <div style={styles.app_bar}>
+          <DateRangePicker
+            customInput={
+              <div style={styles.date_filter}>
+                <img alt="" src="/images/calendar.png" />
+                <Typography
+                  data-testid="action-test2"
+                  style={styles.search_dashboard_actions}
+                >
+                  Due date
+                </Typography>
+                <img alt="" src="/images/arrow-down.png" />
+              </div>
+            }
+            id="due-by"
+            startDate={dateRange.start}
+            endDate={dateRange.end}
+            onChange={onDateRangeChange}
+            placeholder="Sort by due date"
+            data-testid="due-by-date"
+          />
+        </div>
+      </div>
 
       <TabPanel value={activeTab} index={1}>
-        {lookBooksData?.['In Progress'].length &&
-        lookBooksData.Queued.length &&
-        lookBooksData['To Do'].length ? (
+        {lookBooksData?.['In Progress'].length ||
+        lookBooksData?.Queued.length ||
+        lookBooksData?.['To Do'].length ? (
           <Stack direction="row" spacing={2} style={styles.mt}>
             <div style={styles.look_book_order_container}>
               <div style={styles.look_book_order_inside_container}>
