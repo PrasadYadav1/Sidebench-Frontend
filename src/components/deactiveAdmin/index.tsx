@@ -12,10 +12,10 @@ const DeactiveAdmin = ({
     <Popup
       id="deactivate"
       open={deactiveAdmin}
-      title="Deactive"
+      title="Deactivate"
       textAlign="left"
       handleClose={() => setDeactiveAdmin(false)}
-      description={<>Are you sure you want to Deactive the Admin?</>}
+      description={<>Are you sure you want to Deactivate the Admin?</>}
       style={styles.popup_width}
     >
       <>

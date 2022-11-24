@@ -1,5 +1,13 @@
-import React from 'react';
-import { Box, Button, Checkbox, Link, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  IconButton,
+  InputAdornment,
+  Link,
+  Typography
+} from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { object, string } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,15 +25,17 @@ const validationSchema = object({
   }).email({ message: 'Please provide a valid email address' }),
   password: string({
     required_error: 'Please provide a password'
-  }).min(8, 'Password length must be 8 characters')
+  }).min(8, 'Password must be at least 8 characters long')
 });
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const {
     handleSubmit,
     control,
-    formState: { errors }
+    formState: { errors },
+    setError
   } = useForm<LoginData>({
     defaultValues: {
       email: '',
@@ -34,13 +44,27 @@ const Login: React.FC = () => {
     resolver: zodResolver(validationSchema)
   });
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const res = await postApi(`${getAPIUrl()}/admins/login`, data);
       setLocalStorageData(res.data.data);
-      navigate('/dashboard');
+      if (res.data.data.status.id === 1) {
+        navigate('/change-password');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (error: any) {
-      console.log(error);
+      setError('password', { message: error.response?.data.errors.message });
     }
   });
 
@@ -84,11 +108,28 @@ const Login: React.FC = () => {
               <InputField
                 {...field}
                 id="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
                 error={!!errors.password?.message}
                 errorMessage={errors.password?.message}
                 style={{ ...styles.mt, ...styles.fh }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? (
+                          <img alt="" src="eye-slash.svg" />
+                        ) : (
+                          <img alt="" src="eye-slash.svg" />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
             )}
           />

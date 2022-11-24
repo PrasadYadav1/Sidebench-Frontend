@@ -45,6 +45,7 @@ const InputField = ({
         fullWidth
         InputProps={
           {
+            ...props.InputProps,
             sx: { ...style, ...styles.input },
             inputProps: {
               'data-testid': id

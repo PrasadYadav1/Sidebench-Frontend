@@ -39,9 +39,10 @@ export const setLocalStorageData = (data: User) => {
 
 export const getApiErrorMessage = (error: Error) => {
   if (axios.isAxiosError(error) && error.response) {
-    console.log(error, 'Error');
     const status = error.response?.status;
-    const data = error.response?.data as { errors: string | Array<object> };
+    const data = error.response?.data as {
+      errors: string | Array<object> | { [key: string]: string };
+    };
     if (status === 400) {
       return typeof data.errors === 'string' ? data.errors : 'Bad Request';
     }
