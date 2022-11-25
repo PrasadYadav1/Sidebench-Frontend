@@ -265,6 +265,10 @@ const styles = {
   },
   errorToast: {
     fontFamily: 'Jakarta_Text_Light'
+  },
+  tabs: {
+    height: '52px',
+    alignItems: 'center'
   }
 };
 export default styles;

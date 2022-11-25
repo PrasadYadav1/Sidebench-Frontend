@@ -13,6 +13,7 @@ import TabPanelProps, {
   LookBooksApiRows
 } from './types';
 import DateRangePicker from '../../components/elements/daterangepicker';
+import CustomTabs from '../../components/elements/tabs';
 
 const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
@@ -275,34 +276,17 @@ const Dashboard = () => {
         >
           LookBook Order
         </Typography>
-        <Tabs
-          value={activeTab}
-          data-testid="lookbook-tabs"
-          style={styles.lookbook_order_tabs}
-          TabIndicatorProps={{ style: styles.indicator }}
-          onChange={(_event: React.SyntheticEvent, newValue: number) =>
-            setActiveTab(newValue)
-          }
-        >
-          <Tab
-            value={1}
-            style={
-              activeTab === 1
-                ? styles.lookbook_order_Active_tab
-                : styles.lookbook_order_tab
-            }
-            label="New Orders"
-          />
-          <Tab
-            value={2}
-            style={
-              activeTab === 2
-                ? styles.lookbook_order_Active_tab
-                : styles.lookbook_order_tab
-            }
-            label="Finished Orders"
-          />
-        </Tabs>
+
+        <CustomTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          tabList={[
+            { label: 'New Orders', value: 1 },
+            { label: 'Finished Orders', value: 2 }
+          ]}
+          style={styles.tabs}
+          id="lookbook-tabs"
+        />
       </Stack>
       <div style={styles.actions_container}>
         <Typography component="div" sx={{ ...styles.app_bar, flexGrow: 1 }}>

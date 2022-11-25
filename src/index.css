@@ -113,6 +113,14 @@
   background: #FFFFFF;
 }
 
+.MuiTab-root {
+  max-width: 360px !important;
+  min-width: 37px !important;
+  min-height: 35px !important;
+  padding: 0px !important;
+
+}
+
 /* Media Query for Mobile Devices */
 @media (min-width: 481px) and (max-width: 767px) {
   body {

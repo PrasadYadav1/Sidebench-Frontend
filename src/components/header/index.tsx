@@ -14,7 +14,7 @@ const Header = () => {
     <ThemeProvider theme={theme}>
       <AppBar position="absolute" color="secondary" sx={styles.appBar}>
         <Toolbar>
-          <img alt="" src="/images/header-icon.png" />
+          <img alt="" src="header.svg" />
           <Typography component="div" sx={styles.headerTextContainer}>
             <Typography
               data-testid="header-text1"
@@ -42,11 +42,11 @@ const Header = () => {
               size="small"
               style={styles.inputfield}
             />
-            <img alt="" src="/images/alert.png" />
-            <img alt="" src="/images/message.png" />
-            <img alt="" src="/images/line.png" style={styles.line} />
+            <img alt="" src="alerts.svg" />
+            <img alt="" src="message.svg" />
+            <img alt="" src="line.svg" style={styles.line} />
             <img alt="" src="/images/profile.png" />
-            <img alt="" src="/images/arrow-down.png" style={styles.arrowDown} />
+            <img alt="" src="arrow-down.svg" style={styles.arrowDown} />
           </Typography>
         </Toolbar>
       </AppBar>
