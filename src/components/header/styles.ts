@@ -32,7 +32,6 @@ const styles = {
     gap: '12px'
   },
   inputfield: {
-    width: '332px',
     height: '42px',
     borderRadius: '99px'
   },
