@@ -97,6 +97,9 @@ const styles = {
     marginLeft: '-7Px',
     marginTop: '-15px',
     position: 'relative'
+  },
+  toastText: {
+    fontFamily: 'Jakarta_Text_Light'
   }
 };
 

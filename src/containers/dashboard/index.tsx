@@ -279,13 +279,15 @@ const Dashboard = () => {
 
         <CustomTabs
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
           tabList={[
             { label: 'New Orders', value: 1 },
             { label: 'Finished Orders', value: 2 }
           ]}
           style={styles.tabs}
           id="lookbook-tabs"
+          onTabChange={(value) => {
+            setActiveTab(value);
+          }}
         />
       </Stack>
       <div style={styles.actions_container}>
