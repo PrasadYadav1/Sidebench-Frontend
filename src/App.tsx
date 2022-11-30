@@ -8,6 +8,7 @@ import styles from './login/styles';
 import ResetPassword from './containers/resetPassword';
 import ForgotPassword from './containers/forgotPassword';
 import Inventory from './containers/inventory';
+import ItemDetail from './containers/itemDetails';
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/inventory" element={<Inventory />} />
+            <Route
+              path="/inventory/item-details/:id"
+              element={
+                <Typography component="div">
+                  <ItemDetail />
+                </Typography>
+              }
+            />
             <Route
               path="/customer-list"
               element={<Typography component="div">Customer List</Typography>}
