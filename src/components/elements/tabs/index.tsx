@@ -5,10 +5,10 @@ import CustomTabProps from './types';
 
 const CustomTabs = ({
   activeTab,
-  setActiveTab,
   tabList,
   style,
-  id
+  id,
+  onTabChange
 }: CustomTabProps & TabProps) => {
   return (
     <Tabs
@@ -16,8 +16,8 @@ const CustomTabs = ({
       data-testid={id}
       style={{ ...styles.lookbook_order_tabs, ...style }}
       TabIndicatorProps={{ style: styles.indicator }}
-      onChange={(event: React.SyntheticEvent, newValue: number) =>
-        setActiveTab(newValue)
+      onChange={(_event: React.SyntheticEvent, newValue: number) =>
+        onTabChange(newValue)
       }
     >
       {tabList.map((t) => (

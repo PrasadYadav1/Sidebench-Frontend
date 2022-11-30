@@ -64,7 +64,11 @@ const Login: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (error: any) {
-      setError('password', { message: error.response?.data.errors.message });
+      if (error.response?.status === 404) {
+        setError('password', { message: error.response?.data.errors });
+      } else {
+        setError('password', { message: error.response?.data.errors.message });
+      }
     }
   });
 

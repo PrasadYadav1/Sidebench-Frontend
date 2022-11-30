@@ -1,10 +1,10 @@
 const INVENTORY_TAB_LIST = [
-  { label: 'All', value: 1 },
-  { label: 'Tops', value: 2 },
-  { label: 'Bottoms', value: 3 },
-  { label: 'Dresses', value: 4 },
-  { label: 'Shoes', value: 5 },
-  { label: 'Accessories', value: 6 }
+  { label: 'All', value: 0 },
+  { label: 'Tops', value: 1 },
+  { label: 'Bottoms', value: 4 },
+  { label: 'Dresses', value: 2 },
+  { label: 'Shoes', value: 8 },
+  { label: 'Accessories', value: 9 }
 ];
 
 export const LEFT_PANNEL_TEXT = {
